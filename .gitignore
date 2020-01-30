@@ -353,3 +353,4 @@ MigrationBackup/
 .ionide/
 *.config
 *.vs
+*.configuration.cs
