@@ -21,7 +21,8 @@ namespace WatsonTracker.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-
+            //if (!System.Diagnostics.Debugger.IsAttached)
+            //    System.Diagnostics.Debugger.Launch();
             var store = new RoleStore<IdentityRole>(context);
             var manager = new RoleManager<IdentityRole>(store);
             var role = new IdentityRole();
@@ -87,9 +88,7 @@ namespace WatsonTracker.Migrations
                     DisplayName = "ADMIN"
                 };
 
-                userManager.CreateAsync(user, "Abc&" +
-                    "" +
-                    "123!");
+                userManager.Create(user, "Abc&123!");
 
                 userManager.AddToRoles(user.Id, new string[]
                 {
