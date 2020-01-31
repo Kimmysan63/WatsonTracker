@@ -180,13 +180,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\ProjectsHelper.cs" />
     <Compile Include="Helper\UserRolesHelper.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddUserToProjectViewModels.cs" />
     <Compile Include="Models\AssignNewUserRoleViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\RemoveUserRoleViewModel.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\TicketAttachment.cs" />
     <Compile Include="Models\TicketComment.cs" />
@@ -289,6 +292,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\RemoveUserRoleViewModel\" />
+    <Folder Include="Views\RemoveUserRole\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

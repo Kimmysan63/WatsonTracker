@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -17,6 +18,34 @@ namespace WatsonTracker.Controllers
         // GET: Projects
         public ActionResult Index()
         {
+            if (User.IsInRole("Admin"))
+            {
+                var model = db.Projects.ToList();
+
+                return View(model);
+            }
+            else if (User.IsInRole("ProjectManager"))
+            {
+                var userId = User.Identity.GetUserId();
+
+                var user = db.Users.Find(userId);
+
+                var model = user.Projects.Where(p => p.ProjectManagerId == userId).ToList();
+
+                return View(model);
+            }
+            else if ((User.IsInRole("Developer")) || ( User.IsInRole("Submitter")))
+            {
+
+                var userId = User.Identity.GetUserId();
+
+                var user = db.Users.Find(userId);
+
+                var model = user.Projects.ToList();
+
+                return View(model);
+            }
+
             return View(db.Projects.ToList());
         }
 
@@ -36,6 +65,7 @@ namespace WatsonTracker.Controllers
         }
 
         // GET: Projects/Create
+        [Authorize(Roles = "Admin,ProjectManager")]
         public ActionResult Create()
         {
             return View();
@@ -59,6 +89,8 @@ namespace WatsonTracker.Controllers
         }
 
         // GET: Projects/Edit/5
+        [Authorize(Roles = "Admin,ProjectManager")]
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -123,5 +155,8 @@ namespace WatsonTracker.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
+
 }
+

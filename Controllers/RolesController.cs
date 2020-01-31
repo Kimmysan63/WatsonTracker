@@ -8,7 +8,9 @@ using WatsonTracker.Helper;
 using WatsonTracker.Models;
 
 namespace WatsonTracker.Controllers
+
 {
+    [Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -29,11 +31,11 @@ namespace WatsonTracker.Controllers
         // POST: Roles
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AssignUserRole(string UserList, string RoleList)
+        public ActionResult AssignUserRole(string UserId, string RoleName)
         {
-            if (helper.AddUserToRole(UserList, RoleList))
+            if (helper.AddUserToRole(UserId, RoleName))
             {
-                 return RedirectToAction("Index", "Home");
+                return RedirectToAction("AssignUserRole", "Roles");
             }
             else
             {
@@ -41,5 +43,36 @@ namespace WatsonTracker.Controllers
             }
 
         }
+
+
+
+        // GET: Remove User Roles
+        public ActionResult RemoveUserRole()
+        {
+            RemoveUserRoleViewModel model = new RemoveUserRoleViewModel();
+
+            model.UserId = new SelectList(db.Users, "Id", "FirstName");
+            model.RoleName = new SelectList(db.Roles, "Name", "Name");
+            model.UserRole = db.Users.ToList();
+
+            return View(model);
+        }
+
+        // POST: Remove User Roles
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveUserRole(string UserId, string RoleName)
+        {
+            if (helper.RemoveUserFromRole(UserId, RoleName))
+            {
+                return RedirectToAction("RemoveUserRole", "Roles");
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+        }
+
     }
 }
