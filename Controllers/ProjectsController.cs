@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using WatsonTracker.Helper;
 using WatsonTracker.Models;
 
 namespace WatsonTracker.Controllers
@@ -14,13 +15,66 @@ namespace WatsonTracker.Controllers
     public class ProjectsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private ProjectsHelper helper = new ProjectsHelper();
+
+
+        // GET: Assign Users to Projects
+        [Authorize(Roles = "Admin,ProjectManager")]
+
+        public ActionResult AssignUserToProject()
+        {
+            AssignUserToProjectViewModel model = new AssignUserToProjectViewModel();
+
+            model.UserId = new SelectList(db.Users, "Id", "FirstName");
+            model.ProjectId = new SelectList(db.Projects, "Id", "Name");
+            model.ProjectUser = db.Users.ToList();
+
+            return View(model);
+
+        }
+        //POST: Assign Users to Projects
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AssignUserToProject(string UserId, int ProjectId)
+        {
+            helper.AddUserToProject(UserId, ProjectId);
+            db.SaveChanges();
+            return RedirectToAction("AssignUserToProject", "Projects");
+        }
+        //******************************************************************************************
+
+        // GET: Remove Users to Projects
+        [Authorize(Roles = "Admin,ProjectManager")]
+
+        public ActionResult RemoveUserFromProject()
+        {
+            RemoveUserFromProjectViewModel model = new RemoveUserFromProjectViewModel();
+
+            model.UserId = new SelectList(db.Users, "Id", "FirstName");
+            model.ProjectId = new SelectList(db.Projects, "Id", "Name");
+            model.ProjectUser = db.Users.ToList();
+
+            return View(model);
+
+        }
+        //POST: Remove Users to Projects
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveUserFromProject(string UserId, int ProjectId)
+        {
+            helper.RemoveUserFromProject(UserId, ProjectId);
+            db.SaveChanges();
+            return RedirectToAction("RemoveUserFromProject", "Projects");
+        }
+
 
         // GET: Projects
-        public ActionResult Index()
+        [Authorize(Roles ="Admin, ProjectManger, Developer, Submitter")]
+        public ActionResult Index(List<Project> model)
         {
             if (User.IsInRole("Admin"))
             {
-                var model = db.Projects.ToList();
+                model = db.Projects.ToList();
 
                 return View(model);
             }
@@ -30,7 +84,7 @@ namespace WatsonTracker.Controllers
 
                 var user = db.Users.Find(userId);
 
-                var model = user.Projects.Where(p => p.ProjectManagerId == userId).ToList();
+                model = user.Projects.Where(p => p.ProjectManagerId == userId).ToList();
 
                 return View(model);
             }
@@ -41,7 +95,7 @@ namespace WatsonTracker.Controllers
 
                 var user = db.Users.Find(userId);
 
-                var model = user.Projects.ToList();
+                model = user.Projects.ToList();
 
                 return View(model);
             }

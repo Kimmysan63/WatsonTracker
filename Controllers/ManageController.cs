@@ -15,6 +15,7 @@ namespace WatsonTracker.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public ManageController()
         {
@@ -32,9 +33,9 @@ namespace WatsonTracker.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -244,6 +245,44 @@ namespace WatsonTracker.Controllers
             return View(model);
         }
 
+        // GET: /Manage/ChangeName
+        public ActionResult ChangeName()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            ChangeNameViewModel model = new ChangeNameViewModel();
+            var user = db.Users.Find(User.Identity.GetUserId());
+            model.OldFirstName = user.FirstName;
+            model.OldLastName = user.LastName;
+            return View(model); 
+        }
+
+        //
+        // POST: /Manage/ChangeName
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeName(ChangeNameViewModel model)
+        {
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            if (ModelState.IsValid)
+            {
+                if (model.OldFirstName != model.NewFirstName && model.NewFirstName != null)
+                {
+                    user.FirstName = model.NewFirstName;
+                }
+                if (model.OldLastName != model.NewLastName && model.NewFirstName != null)
+                {
+                    user.LastName = model.NewLastName;
+                }
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
         //
         // GET: /Manage/SetPassword
         public ActionResult SetPassword()
@@ -333,7 +372,7 @@ namespace WatsonTracker.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -384,6 +423,6 @@ namespace WatsonTracker.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

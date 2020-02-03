@@ -79,6 +79,18 @@ namespace WatsonTracker.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
+        [Display(Name = "Display Name")]
+        public string DisplayName { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -109,4 +121,6 @@ namespace WatsonTracker.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+
 }

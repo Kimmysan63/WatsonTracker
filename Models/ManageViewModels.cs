@@ -14,6 +14,7 @@ namespace WatsonTracker.Models
         public bool BrowserRemembered { get; set; }
     }
 
+
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }
@@ -57,6 +58,7 @@ namespace WatsonTracker.Models
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+
 
     public class AddPhoneNumberViewModel
     {
