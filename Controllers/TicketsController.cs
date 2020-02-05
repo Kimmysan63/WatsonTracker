@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -15,11 +16,53 @@ namespace WatsonTracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Tickets
-        public ActionResult Index()
+        [Authorize(Roles = "Admin, ProjectManger, Developer, Submitter")]
+        //public ActionResult Index()
+        //{
+        //    var tickets = db.Tickets.Include(t => t.AssignedToUser).Include(t => t.OwnerUser).Include(t => t.Project).Include(t => t.TicketPriority).Include(t => t.TicketStatus).Include(t => t.TicketType);
+        //    return View(tickets.ToList());
+        //}
+        public ActionResult Index(List<Ticket> model)
         {
-            var tickets = db.Tickets.Include(t => t.AssignedToUser).Include(t => t.OwnerUser).Include(t => t.Project).Include(t => t.TicketPriority).Include(t => t.TicketStatus).Include(t => t.TicketType);
-            return View(tickets.ToList());
+            if (User.IsInRole("Admin"))
+            {
+                model = db.Tickets.ToList();
+
+                return View(model);
+            }
+            else if (User.IsInRole("ProjectManager"))
+            {
+                var userId = User.Identity.GetUserId();
+                var projects = db.Projects.Where(p => p.ProjectManagerId == userId).ToList();
+
+                model = projects.SelectMany(p => p.Tickets).ToList();
+
+                return View(model);
+            }
+            else if (User.IsInRole("Developer"))
+            {
+
+                var userId = User.Identity.GetUserId();
+
+                model = db.Tickets.Where(t => t.AssignedToUserId == userId).ToList();
+
+                return View(model);
+            }
+            else if (User.IsInRole("Submitter"))
+            {
+
+                var userId = User.Identity.GetUserId();
+
+                model = db.Tickets.Where(t => t.OwnerUserId == userId).ToList();
+
+                return View(model);
+            }
+
+
+            return View(db.Tickets.ToList());
         }
+
+
 
         // GET: Tickets/Details/5
         public ActionResult Details(int? id)
@@ -51,12 +94,17 @@ namespace WatsonTracker.Controllers
         // POST: Tickets/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Submitter")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Description,Created,Updated,ProjectID,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId,AssignedToUserId")] Ticket ticket)
+        public ActionResult Create([Bind(Include = "Id,Title,Description,ProjectID,TicketTypeId")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
+                ticket.Created = DateTimeOffset.Now;
+                ticket.OwnerUserId = User.Identity.GetUserId();
+                ticket.TicketStatusId = db.TicketStatus.FirstOrDefault(p => p.Name == "New").ID;
+                ticket.TicketPriorityId = db.TicketPriorities.FirstOrDefault(p => p.Name == "High").ID;
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -65,9 +113,9 @@ namespace WatsonTracker.Controllers
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", ticket.AssignedToUserId);
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", ticket.OwnerUserId);
             ViewBag.ProjectID = new SelectList(db.Projects, "Id", "Name", ticket.ProjectID);
-            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "ID", "Name", ticket.TicketPriorityId);
-            ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "ID", "Name", ticket.TicketStatusId);
-            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "ID", "Name", ticket.TicketTypeId);
+            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
+            ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "Name", ticket.TicketStatusId);
+            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketTypeId);
             return View(ticket);
         }
 
@@ -148,5 +196,6 @@ namespace WatsonTracker.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

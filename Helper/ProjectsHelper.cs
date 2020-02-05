@@ -18,7 +18,7 @@ namespace WatsonTracker.Helper
             return (flag);
         }
 
-        public ICollection<Project>ListUserProjects(string userId)
+        public ICollection<Project> ListUserProjects(string userId)
         {
             ApplicationUser user = db.Users.Find(userId);
 
@@ -28,7 +28,7 @@ namespace WatsonTracker.Helper
 
         public void AddUserToProject(string userId, int projectId)
         {
-            if(!IsUserOnProject(userId, projectId))
+            if (!IsUserOnProject(userId, projectId))
             {
                 Project proj = db.Projects.Find(projectId);
                 var newUser = db.Users.Find(userId);
@@ -40,7 +40,7 @@ namespace WatsonTracker.Helper
 
         public void RemoveUserFromProject(string userId, int projectId)
         {
-            if(IsUserOnProject(userId, projectId))
+            if (IsUserOnProject(userId, projectId))
             {
                 Project proj = db.Projects.Find(projectId);
                 var delUser = db.Users.Find(userId);
@@ -51,12 +51,21 @@ namespace WatsonTracker.Helper
             }
         }
 
-        public ICollection<ApplicationUser>UsersOnProject(int projectId)
+        public void AddProjectManagerToProject(string PMId, int projectId)
+        {
+            var project = db.Projects.Find(projectId);
+            project.ProjectManagerId = PMId;
+            db.SaveChanges();
+
+        }
+
+
+        public ICollection<ApplicationUser> UsersOnProject(int projectId)
         {
             return db.Projects.Find(projectId).Users;
         }
 
-        public ICollection<ApplicationUser>UsersNotOnProject(int projectId)
+        public ICollection<ApplicationUser> UsersNotOnProject(int projectId)
         {
             return db.Users.Where(u => u.Projects.All(p => p.Id != projectId)).ToList();
         }

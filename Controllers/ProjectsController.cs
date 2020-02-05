@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using WatsonTracker.Helper;
 using WatsonTracker.Models;
+using WatsonTracker.ViewModels;
 
 namespace WatsonTracker.Controllers
 {
@@ -41,7 +42,6 @@ namespace WatsonTracker.Controllers
             db.SaveChanges();
             return RedirectToAction("AssignUserToProject", "Projects");
         }
-        //******************************************************************************************
 
         // GET: Remove Users to Projects
         [Authorize(Roles = "Admin,ProjectManager")]
@@ -67,6 +67,49 @@ namespace WatsonTracker.Controllers
             return RedirectToAction("RemoveUserFromProject", "Projects");
         }
 
+        // GET: Assign ProjectManager to Projects
+        [Authorize(Roles = "Admin,ProjectManager")]
+
+        public ActionResult AssignProjectManagerToProject()
+        {
+            AssignProjectManagerToProject model = new AssignProjectManagerToProject();
+            List<ProjectWithPMName> listOfProj = new List<ProjectWithPMName>();
+
+            model.ProjectManagerId = new SelectList(db.Users, "Id", "FirstName");
+            model.ProjectId = new SelectList(db.Projects, "Id", "Name");
+            List<Project> normProjects = db.Projects.ToList();
+            foreach(var proj in normProjects)
+            {
+                ProjectWithPMName projectWith = new ProjectWithPMName();
+
+                projectWith.Name = proj.Name;
+                var PMId = proj.ProjectManagerId;
+                if (PMId == null)
+                {
+                    projectWith.PMName = "";
+                } else
+                {
+                    projectWith.PMName = db.Users.FirstOrDefault(u => u.Id == PMId).FirstName;
+                }
+
+                listOfProj.Add(projectWith);
+            }
+
+            model.Projects = listOfProj;
+            return View(model);
+
+        }
+        //POST: Assign ProjectManager to Projects
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AssignProjectManagerToProject(string ProjectManagerId, int ProjectId)
+        {
+            helper.AddProjectManagerToProject(ProjectManagerId, ProjectId);
+            db.SaveChanges();
+            return RedirectToAction("AssignProjectManagerToProject", "Projects");
+        }
+
+
 
         // GET: Projects
         [Authorize(Roles ="Admin, ProjectManger, Developer, Submitter")]
@@ -82,9 +125,7 @@ namespace WatsonTracker.Controllers
             {
                 var userId = User.Identity.GetUserId();
 
-                var user = db.Users.Find(userId);
-
-                model = user.Projects.Where(p => p.ProjectManagerId == userId).ToList();
+                model = db.Projects.Where(p => p.ProjectManagerId == userId).ToList();
 
                 return View(model);
             }

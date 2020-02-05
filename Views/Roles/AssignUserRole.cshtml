@@ -41,31 +41,36 @@
     </div>
 </div>
 }
-<table class="table">
-    <tr>
-        <th>
-            User Name
-        </th>
-        <th>
-            Roles
-        </th>
-
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model.UserRole)
-    {
+<table class="table" id="mytable">
+    <thead>
         <tr>
-            <td>
-                @item.FirstName @item.LastName
-            </td>
-            <td>
-                @foreach(var role in helper.ListUserRoles(item.Id)) 
-                {
-                    @role; <br />
-                }
-            </td>
+            <th>
+                User Name
+            </th>
+            <th>
+                Roles
+            </th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model.UserRole)
+        {
+            <tr>
+                <td>
+                    @item.FirstName @item.LastName
+                </td>
+                <td>
+                    @foreach (var role in helper.ListUserRoles(item.Id))
+                    {
+                        @role; <br />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>
+@section scripts
+    {
+@*<script>$('.table').DataTable();</script>*@
+    }
