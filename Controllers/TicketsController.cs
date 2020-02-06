@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WatsonTracker.Models;
+using WatsonTracker.ViewModels;
 
 namespace WatsonTracker.Controllers
 {
@@ -22,44 +23,42 @@ namespace WatsonTracker.Controllers
         //    var tickets = db.Tickets.Include(t => t.AssignedToUser).Include(t => t.OwnerUser).Include(t => t.Project).Include(t => t.TicketPriority).Include(t => t.TicketStatus).Include(t => t.TicketType);
         //    return View(tickets.ToList());
         //}
-        public ActionResult Index(List<Ticket> model)
+        public ActionResult Index()
         {
+            TicketIndexVM model = new TicketIndexVM();
+            var tickets = db.Tickets;
+            var myTickets = new List<Ticket>();
+            var devTickets = new List<Ticket>();
+                       
             if (User.IsInRole("Admin"))
             {
-                model = db.Tickets.ToList();
-
-                return View(model);
+                myTickets = tickets.ToList();
             }
             else if (User.IsInRole("ProjectManager"))
             {
                 var userId = User.Identity.GetUserId();
                 var projects = db.Projects.Where(p => p.ProjectManagerId == userId).ToList();
 
-                model = projects.SelectMany(p => p.Tickets).ToList();
-
-                return View(model);
+                myTickets = projects.SelectMany(p => p.Tickets).ToList();
             }
             else if (User.IsInRole("Developer"))
             {
-
                 var userId = User.Identity.GetUserId();
-
-                model = db.Tickets.Where(t => t.AssignedToUserId == userId).ToList();
-
-                return View(model);
+                var user = db.Users.Find(userId);
+                var projects = user.Projects.ToList();
+                myTickets = projects.SelectMany(t => t.Tickets).ToList();
+                devTickets = db.Tickets.Where(t => t.AssignedToUserId == userId).ToList();
             }
             else if (User.IsInRole("Submitter"))
             {
-
                 var userId = User.Identity.GetUserId();
-
-                model = db.Tickets.Where(t => t.OwnerUserId == userId).ToList();
-
-                return View(model);
+                var user = db.Users.Find(userId);
+                myTickets = db.Tickets.Where(t => t.OwnerUserId == userId).ToList();
             }
+            model.MyTickets = myTickets;
+            model.AssignedTickets = devTickets;
 
-
-            return View(db.Tickets.ToList());
+            return View(model);
         }
 
 

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WatsonTracker.Models.Ticket>
+﻿@model WatsonTracker.ViewModels.TicketIndexVM
 
 @{
     ViewBag.Title = "Index";
@@ -6,9 +6,6 @@
 
 <h2>Tickets Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -31,23 +28,23 @@
                 Type
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                Title
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Created)
+                Created
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Updated)
+                Updated
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 
-        @foreach (var item in Model)
+        @foreach (var item in Model.MyTickets)
         {
             <tr>
                 <td>
