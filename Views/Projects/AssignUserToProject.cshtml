@@ -42,30 +42,33 @@
 }
 
 <table class="table">
-    <tr>
-        <th>
-            User Name
-        </th>
-        <th>
-            Projects
-        </th>
-
-        <th></th>
-    </tr>
-    @foreach (var item in Model.ProjectUser)
-    {
+    <thead>
         <tr>
-            <td>
-                @item.FirstName @item.LastName
-            </td>
-            <td>
-                @foreach (var proj in item.Projects)
-                {
-                    <p>@proj.Name</p>
-                }
-            </td>
+            <th>
+                User Name
+            </th>
+            <th>
+                Projects
+            </th>
         </tr>
-    }
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ProjectUser)
+        {
+            <tr>
+                <td>
+                    @item.FirstName @item.LastName
+                </td>
+                <td>
+                    @foreach (var proj in item.Projects)
+                    {
+                        <p>@proj.Name</p>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 

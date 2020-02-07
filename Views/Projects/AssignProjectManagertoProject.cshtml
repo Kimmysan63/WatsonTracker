@@ -8,6 +8,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
+
         <h4></h4>
         <hr />
 
@@ -38,24 +39,27 @@
 }
 
 <table class="table">
-    <tr>
-        <th>
-            Projects Manager Id
-        <th>
-            Project Name
-        </th>
-
-        <th></th>
-    </tr>
-    @foreach (var project in Model.Projects)
-    {
+    <thead>
         <tr>
-            <td>
-                @project.PMName
-            </td>
-            <td>
-                <p>@project.Name</p>
-            </td>
+            <th>
+                Projects Manager Id
+            <th>
+                Project Name
+            </th>
+
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var project in Model.Projects)
+        {
+            <tr>
+                <td>
+                    @project.PMName
+                </td>
+                <td>
+                    <p>@project.Name</p>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

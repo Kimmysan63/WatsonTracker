@@ -129,7 +129,7 @@ namespace WatsonTracker.Controllers
 
                 return View(model);
             }
-            else if ((User.IsInRole("Developer")) || ( User.IsInRole("Submitter")))
+            else if (User.IsInRole("Developer") ||  User.IsInRole("Submitter"))
             {
 
                 var userId = User.Identity.GetUserId();

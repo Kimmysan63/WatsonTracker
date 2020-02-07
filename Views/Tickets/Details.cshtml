@@ -1,5 +1,4 @@
 ﻿@model WatsonTracker.Models.Ticket
-
 @{
     ViewBag.Title = "Details";
 }
@@ -11,7 +10,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.AssignedToUser.FirstName)
+            Assigned To Name
         </dt>
 
         <dd>
@@ -19,7 +18,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.OwnerUser.FirstName)
+            Submitter's Name
         </dt>
 
         <dd>
@@ -27,7 +26,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.Name)
+            Project Name
         </dt>
 
         <dd>
@@ -35,7 +34,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TicketPriority.Name)
+            Ticket Priority
         </dt>
 
         <dd>
@@ -43,7 +42,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TicketStatus.Name)
+           Ticket Status
         </dt>
 
         <dd>
@@ -51,15 +50,14 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TicketType.Name)
-        </dt>
+            Ticket Type
 
         <dd>
             @Html.DisplayFor(model => model.TicketType.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            Ticket Title
         </dt>
 
         <dd>
@@ -67,7 +65,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            Ticket Description
         </dt>
 
         <dd>
@@ -75,7 +73,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Created)
+            Created Date
         </dt>
 
         <dd>
@@ -83,7 +81,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Updated)
+            Updated
         </dt>
 
         <dd>
@@ -96,3 +94,66 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<div class="comment-main">
+    <h3 class="blog-title">Comments (@Model.Comments.Count)<span></span></h3>
+    <div class="row">
+        @foreach (var item in Model.Comments)
+        {
+
+            <ol class="comments">
+                <li class="comment even thread-even depth-1" id="comment-1">
+                    <div id="div-comment-1" class="comment-wrap">
+                        @*<div class="comment-theme">
+                            <div class="comment-image">
+                                <img src="~/Template/assets/images/comment/OIP.jfif" alt="Jhon">
+                            </div>
+                        </div>*@
+                        <div class="comment-main-area">
+                            <div class="comment-wrapper">
+                                <div class="sewl-comments-meta">
+                                    <h4><a href="#">@item.User.FirstName</a></h4>
+                                </div>
+                                <div class="comment-area">
+                                    <p>@Html.Raw(item.Comment)</p>
+                                        @Html.ActionLink("Edit", "Edit", "Comments", new { id = item.Id }, new { @class = "btn btn-warning" }) <span>|</span>
+                                        @Html.ActionLink("Delete", "Delete", "Comments", new { id = item.Id }, new { @class = "btn btn-warning" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+            </ol>
+        }
+    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        using (Html.BeginForm("Create", "TicketComments", new { ticketId = Model.Id }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @*@Html.Hidden("BlogId", Model.Id)*@
+            <div class="form-horizontal">
+                <div class="container">
+                    <h4>Comment</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <textarea name="Comment" id="Comment" placeholder="Type your comment" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Add Comment" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>No Comments</p>
+    }
+</div>
