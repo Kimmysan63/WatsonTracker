@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -49,17 +51,23 @@ namespace WatsonTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TicketId,FilePath,Description,Created,UserId,FileUrl")] TicketAttachment ticketAttachment)
+        public ActionResult Create([Bind(Include = "Id,TicketId,FilePath,Description,Created,UserId,")] TicketAttachment ticketAttachment, HttpPostedFileBase attachment, int ticketId)
         {
             if (ModelState.IsValid)
             {
+                var fileName = Path.GetFileName(attachment.FileName);
+                attachment.SaveAs(Path.Combine(Server.MapPath("~/Attachments/"), fileName));
+                ticketAttachment.FilePath = "/Attachments/" + fileName;
+                ticketAttachment.UserId = User.Identity.GetUserId();
+                ticketAttachment.TicketId = ticketId;
+                ticketAttachment.Created = DateTimeOffset.Now;
                 db.TicketAttachments.Add(ticketAttachment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Tickets", new { id = ticketId });
             }
 
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachment.TicketId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketAttachment.UserId);
+            //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachment.TicketId);
+            //ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName", ticketAttachment.UserId);
             return View(ticketAttachment);
         }
 

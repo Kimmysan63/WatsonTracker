@@ -163,6 +163,8 @@ namespace WatsonTracker.Controllers
         [Authorize(Roles = "Admin,ProjectManager")]
         public ActionResult Create()
         {
+            UserRolesHelper rolesHelper = new UserRolesHelper();
+            ViewBag.ProjectManagerId = new SelectList(rolesHelper.UsersInRole("ProjectManager"), "Id", "FirstName");
             return View();
         }
 
@@ -171,10 +173,11 @@ namespace WatsonTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Project project)
+        public ActionResult Create([Bind(Include = "Id,Name,ProjectManagerId")] Project project)
         {
             if (ModelState.IsValid)
             {
+                project.PMName = db.Users.FirstOrDefault(u=>u.Id == project.ProjectManagerId).FirstName;
                 db.Projects.Add(project);
                 db.SaveChanges();
                 return RedirectToAction("Index");

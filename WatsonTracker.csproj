@@ -535,6 +535,7 @@
     <Content Include="Views\Projects\RemoveUserFromProject.cshtml" />
     <Content Include="Views\Manage\ChangeName.cshtml" />
     <Content Include="Views\Projects\AssignProjectManagertoProject.cshtml" />
+    <Content Include="Views\Tickets\AllTicketIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

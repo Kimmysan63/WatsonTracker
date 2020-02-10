@@ -1,4 +1,5 @@
 ﻿@model WatsonTracker.Models.Ticket
+
 @{
     ViewBag.Title = "Details";
 }
@@ -42,7 +43,7 @@
         </dd>
 
         <dt>
-           Ticket Status
+            Ticket Status
         </dt>
 
         <dd>
@@ -95,6 +96,7 @@
     @Html.ActionLink("Back to List", "Index")
 </p>
 
+@*Add Comments Section*@
 <div class="comment-main">
     <h3 class="blog-title">Comments (@Model.Comments.Count)<span></span></h3>
     <div class="row">
@@ -105,10 +107,10 @@
                 <li class="comment even thread-even depth-1" id="comment-1">
                     <div id="div-comment-1" class="comment-wrap">
                         @*<div class="comment-theme">
-                            <div class="comment-image">
-                                <img src="~/Template/assets/images/comment/OIP.jfif" alt="Jhon">
-                            </div>
-                        </div>*@
+                                <div class="comment-image">
+                                    <img src="~/Template/assets/images/comment/OIP.jfif" alt="Jhon">
+                                </div>
+                            </div>*@
                         <div class="comment-main-area">
                             <div class="comment-wrapper">
                                 <div class="sewl-comments-meta">
@@ -116,8 +118,8 @@
                                 </div>
                                 <div class="comment-area">
                                     <p>@Html.Raw(item.Comment)</p>
-                                        @Html.ActionLink("Edit", "Edit", "Comments", new { id = item.Id }, new { @class = "btn btn-warning" }) <span>|</span>
-                                        @Html.ActionLink("Delete", "Delete", "Comments", new { id = item.Id }, new { @class = "btn btn-warning" })
+                                    @Html.ActionLink("Edit", "Edit", "Comments", new { id = item.Id }, new { @class = "btn btn-warning" }) <span>|</span>
+                                    @Html.ActionLink("Delete", "Delete", "Comments", new { id = item.Id }, new { @class = "btn btn-warning" })
                                 </div>
                             </div>
                         </div>
@@ -125,14 +127,17 @@
                     </div>
                 </li>
             </ol>
+
+
         }
     </div>
+
+
     @if (User.Identity.IsAuthenticated)
     {
         using (Html.BeginForm("Create", "TicketComments", new { ticketId = Model.Id }, FormMethod.Post))
         {
             @Html.AntiForgeryToken()
-            @*@Html.Hidden("BlogId", Model.Id)*@
             <div class="form-horizontal">
                 <div class="container">
                     <h4>Comment</h4>
@@ -152,8 +157,43 @@
             </div>
         }
     }
-    else
+
+</div>
+
+@*Attachments Section*@
+
+
+
+<div class="comment-main">
+    <h3 class="blog-title">Attachments (@Model.Attachments.Count)<span></span></h3>
+    <div class="row">
+        @foreach (var attachment in Model.Attachments)
+        {
+            <div class="row">
+                <div class="col-md-7">
+                    <a href="@attachment.FilePath">@attachment.FilePath.Remove(0, 13)</a>
+                </div>
+                <div class="col-md-5">
+                    <img src="attachment.FilePath)" style="width:40px;" />
+                </div>
+            </div>
+
+        }
+    </div>
+
+    @if (User.Identity.IsAuthenticated)
     {
-        <p>No Comments</p>
+        using (Html.BeginForm("Create", "TicketAttachments", new { ticketId = Model.Id }, FormMethod.Post, new { enctype = "Multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <input name="attachment" type="file" class="form-control" id="fileUpload" />
+                </div>
+                <div class="form-group col-md-12">
+                    <button type="submit" class="btn btn-primary">Submit Attachment</button>
+                </div>
+            </div>
+        }
     }
 </div>

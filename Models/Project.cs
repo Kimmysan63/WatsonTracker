@@ -10,6 +10,7 @@ namespace WatsonTracker.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string ProjectManagerId { get; set; }
+        public string PMName { get; set; }
 
         public virtual ICollection<ApplicationUser> Users { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
