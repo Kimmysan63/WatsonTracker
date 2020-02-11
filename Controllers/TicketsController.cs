@@ -13,8 +13,11 @@ using WatsonTracker.ViewModels;
 
 namespace WatsonTracker.Controllers
 {
+
+
     public class TicketsController : Controller
     {
+        private HistoryHelper historyHelper = new HistoryHelper();
         private ApplicationDbContext db = new ApplicationDbContext();
         private UserRolesHelper rolesHelper = new UserRolesHelper();
 
@@ -31,7 +34,7 @@ namespace WatsonTracker.Controllers
             var tickets = db.Tickets;
             var myTickets = new List<Ticket>();
             var devTickets = new List<Ticket>();
-                       
+
             if (User.IsInRole("Admin"))
             {
                 myTickets = tickets.ToList();
@@ -68,6 +71,9 @@ namespace WatsonTracker.Controllers
         // GET: Tickets/Details/5
         public ActionResult Details(int? id)
         {
+            TicketDetailsVM ticketDetailsVM = new TicketDetailsVM();
+            ticketDetailsVM.Histories = db.TicketHistories.Where(th => th.TicketId == id).ToList();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -147,10 +153,19 @@ namespace WatsonTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                //called Memento's object - picture of old before changes
+                var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
                 ticket.Updated = DateTimeOffset.Now;
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
+                //determine if ticket notification needs to be generated.  This class/method is static.  No need to instantiate.
+                NotificationManager.ManageTicketNotifications(oldTicket ,ticket);
+
+                var newTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
+                var userId = User.Identity.GetUserId();
+                historyHelper.GenHistory(oldTicket, newTicket, userId);
                 return RedirectToAction("Index");
+
             }
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", ticket.AssignedToUserId);
             ViewBag.ProjectID = new SelectList(db.Projects, "Id", "Name", ticket.ProjectID);

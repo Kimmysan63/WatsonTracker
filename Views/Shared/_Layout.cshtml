@@ -26,11 +26,12 @@
                     @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
                     @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
                     @*<li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
-                    <li>@Html.ActionLink("All Tickets Index", "AllTicketIndex", "Tickets")</li>
-                    <li>@Html.ActionLink("Tickets Index", "Index", "Tickets")</li>
-                    <li>@Html.ActionLink("Project Index", "Index", "Projects")</li>
+                    <li>@Html.ActionLink("All Tik Index", "AllTicketIndex", "Tickets")</li>
+                    <li>@Html.ActionLink("Tik Index", "Index", "Tickets")</li>
+                    <li>@Html.ActionLink("Projects", "Index", "Projects")</li>
                     [Authorize (Roles = "Admin,ProjectManager")]
-                    <li>@Html.ActionLink("Assign User-Project", "AssignUserToProject", "Projects")</li>
+                    <li>@Html.ActionLink("Assign User-Proj", "AssignUserToProject", "Projects")</li>
+                    <li>@Html.ActionLink("Assign PM to Proj", "AssignProjectManagerToProject", "Projects")</li>
 
                 </ul>
                 @Html.Partial("_LoginPartial")

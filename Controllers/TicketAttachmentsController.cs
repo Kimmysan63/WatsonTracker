@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using WatsonTracker.Helper;
 using WatsonTracker.Models;
 
 namespace WatsonTracker.Controllers
@@ -63,6 +64,7 @@ namespace WatsonTracker.Controllers
                 ticketAttachment.Created = DateTimeOffset.Now;
                 db.TicketAttachments.Add(ticketAttachment);
                 db.SaveChanges();
+                NotificationManager.ManageAttachmentNotifications(ticketAttachment);
                 return RedirectToAction("Details", "Tickets", new { id = ticketId });
             }
 

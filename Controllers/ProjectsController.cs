@@ -17,6 +17,8 @@ namespace WatsonTracker.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private ProjectsHelper helper = new ProjectsHelper();
+        private UserRolesHelper roleHelper = new UserRolesHelper();
+
 
 
         // GET: Assign Users to Projects
@@ -75,7 +77,7 @@ namespace WatsonTracker.Controllers
             AssignProjectManagerToProject model = new AssignProjectManagerToProject();
             List<ProjectWithPMName> listOfProj = new List<ProjectWithPMName>();
 
-            model.ProjectManagerId = new SelectList(db.Users, "Id", "FirstName");
+            model.ProjectManagerId = new SelectList(roleHelper.UsersInRole("ProjectManager"), "Id", "FirstName");
             model.ProjectId = new SelectList(db.Projects, "Id", "Name");
             List<Project> normProjects = db.Projects.ToList();
             foreach(var proj in normProjects)
