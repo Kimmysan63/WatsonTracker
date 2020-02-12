@@ -48,7 +48,7 @@ namespace WatsonTracker.Helper
                 db.TicketHistories.Add(history);
                 db.SaveChanges();
             }
-            if (oldTicket.TicketPriority != newTicket.TicketPriority)
+            if (oldTicket.TicketPriorityId != newTicket.TicketPriorityId)
             {
                 history.TicketId = newTicket.Id;
                 history.Property = "Priority";
@@ -59,7 +59,7 @@ namespace WatsonTracker.Helper
                 db.TicketHistories.Add(history);
                 db.SaveChanges();
             }
-            if (oldTicket.TicketStatus != newTicket.TicketStatus)
+            if (oldTicket.TicketStatusId != newTicket.TicketStatusId)
             {
                 history.TicketId = newTicket.Id;
                 history.Property = "Status";
@@ -70,7 +70,7 @@ namespace WatsonTracker.Helper
                 db.TicketHistories.Add(history);
                 db.SaveChanges();
             }
-            if (oldTicket.TicketType != newTicket.TicketType)
+            if (oldTicket.TicketTypeId != newTicket.TicketTypeId)
             {
                 history.TicketId = newTicket.Id;
                 history.Property = "Type";

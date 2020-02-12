@@ -47,27 +47,22 @@ namespace WatsonTracker.Helper
                 newNotification.RecipientId = newTicket.AssignedToUserId;
                 newNotification.NotificationBody = $"You have been reassigned to Ticket Id {newTicket.Id}";
                 GenerateNotification(newNotification);
-
-            }
-            else
-            {
-
             }
         }
         private static void ManagePropertyChangeNotifications(Ticket oldTicket, Ticket newTicket)
         {
             //if (newTicket.AssignedToUserId != null)
 
-                //Here I will use a few if statements to manually compare a few Ticket props
+            //Here I will use a few if statements to manually compare a few Ticket props
 
-                if(oldTicket.Title != newTicket.Title)
+            if (oldTicket.Title != newTicket.Title)
+            {
+                GenerateNotification(new TicketNotification
                 {
-                    GenerateNotification(new TicketNotification
-                    {
-                        RecipientId = newTicket.AssignedToUserId,
-                        NotificationBody = $"The Title has changed for Ticket Id {newTicket.Id} from {oldTicket.Title} to { newTicket.Title }"
-                    });
-                }
+                    RecipientId = newTicket.AssignedToUserId,
+                    NotificationBody = $"The Title has changed for Ticket Id {newTicket.Id} from {oldTicket.Title} to { newTicket.Title }"
+                });
+            }
             if (oldTicket.Description != newTicket.Description)
             {
                 GenerateNotification(new TicketNotification
@@ -76,7 +71,23 @@ namespace WatsonTracker.Helper
                     NotificationBody = $"The Description has changed for Ticket Id {newTicket.Id} from {oldTicket.Description} to { newTicket.Description }"
                 });
             }
-            if(oldTicket.TicketPriorityId != newTicket.TicketPriorityId)
+            if (oldTicket.TicketTypeId != newTicket.TicketTypeId)
+            {
+                GenerateNotification(new TicketNotification
+                {
+                    RecipientId = newTicket.AssignedToUserId,
+                    NotificationBody = $"The Ticket Type has changed for Ticket Id {newTicket.Id} from {oldTicket.TicketType.Name} to { newTicket.TicketType.Name }"
+                });
+            }
+            if (oldTicket.TicketStatusId != newTicket.TicketStatusId)
+            {
+                GenerateNotification(new TicketNotification
+                {
+                    RecipientId = newTicket.AssignedToUserId,
+                    NotificationBody = $"The Ticket Status has changed for Ticket Id {newTicket.Id} from {oldTicket.TicketStatus.Name} to { newTicket.TicketStatus.Name }"
+                });
+            }
+            if (oldTicket.TicketPriorityId != newTicket.TicketPriorityId)
             {
                 GenerateNotification(new TicketNotification
                 {
@@ -84,8 +95,9 @@ namespace WatsonTracker.Helper
                     NotificationBody = $"The Ticket Priority has changed for Ticket Id {newTicket.Id} from {oldTicket.TicketPriority.Name} to { newTicket.TicketPriority.Name }"
                 });
             }
-
         }
+
+
         public static void ManageAttachmentNotifications(TicketAttachment ticketAttachment)
         {
 
@@ -107,6 +119,7 @@ namespace WatsonTracker.Helper
                 TicketId = notification.TicketId
             };
             db.TicketNotifications.Add(newNotification);
+            db.SaveChanges();
         }
     }
 }

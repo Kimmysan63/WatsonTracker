@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WatsonTracker.Helper;
@@ -149,7 +150,7 @@ namespace WatsonTracker.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Description,Created,ProjectID,TicketTypeId,TicketPriorityId,TicketStatusId,AssignedToUserId")] Ticket ticket)
+        public ActionResult Edit([Bind(Include = "Id,Title,Description,Created,ProjectID,TicketTypeId,TicketPriorityId,TicketStatusId,AssignedToUserId,OwnerUserId")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
@@ -158,10 +159,11 @@ namespace WatsonTracker.Controllers
                 ticket.Updated = DateTimeOffset.Now;
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
-                //determine if ticket notification needs to be generated.  This class/method is static.  No need to instantiate.
-                NotificationManager.ManageTicketNotifications(oldTicket ,ticket);
-
                 var newTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
+
+                //determine if ticket notification needs to be generated.  This class/method is static.  No need to instantiate.
+                NotificationManager.ManageTicketNotifications(oldTicket, newTicket);
+
                 var userId = User.Identity.GetUserId();
                 historyHelper.GenHistory(oldTicket, newTicket, userId);
                 return RedirectToAction("Index");
@@ -174,6 +176,56 @@ namespace WatsonTracker.Controllers
             ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "ID", "Name", ticket.TicketTypeId);
             return View(ticket);
         }
+
+        //GET: Assign Ticket
+        public ActionResult AssignTicket(int? id)
+        {
+            UserRolesHelper helper = new UserRolesHelper();
+            var ticket = db.Tickets.Find(id);
+            var users = helper.UsersInRole("Developer").ToList();
+            ViewBag.AssignedToUserId = new SelectList(users, "Id", "FirstName", ticket.AssignedToUserId);
+            return View(ticket);
+        }
+
+        //POST: Assign Ticket
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AssignTicket (Ticket model)
+        {
+            var ticket = db.Tickets.Find(model.Id);
+            ticket.AssignedToUserId = model.AssignedToUserId;
+
+            db.SaveChanges();
+
+            var callbackUrl = Url.Action("Details", "Tickets", new { id = ticket.Id }, protocol: Request.Url.Scheme);
+
+            try
+            {
+                EmailService ems = new EmailService();
+                IdentityMessage msg = new IdentityMessage();
+                ApplicationUser user = db.Users.Find(model.AssignedToUserId);
+
+                msg.Body = "You have been assigned a new Ticket." + Environment.NewLine +
+                           "Please click the following link to view the details " +
+                           "<a href=\"" + callbackUrl + "\">NEW TICKET</a>";
+
+                msg.Destination = user.Email;
+                msg.Subject = "New Ticket Assignment";
+
+                await ems.SendMailAsync(msg);
+            }
+            catch (Exception ex)
+            {
+                await Task.FromResult(0);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
+
+
+
 
         // GET: Tickets/Delete/5
         public ActionResult Delete(int? id)

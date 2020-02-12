@@ -187,6 +187,7 @@
     <Compile Include="Helper\ProjectsHelper.cs" />
     <Compile Include="Helper\UserRolesHelper.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\AssignProjectManagerToProject.cs" />
     <Compile Include="ViewModels\AssignUserToProjectViewModel.cs" />
@@ -381,6 +382,7 @@
     <Content Include="Content\DataTables\css\semanticui.scss" />
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
+    <Content Include="private.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -542,6 +544,7 @@
     <Content Include="Views\Projects\AssignProjectManagertoProject.cshtml" />
     <Content Include="Views\Tickets\AllTicketIndex.cshtml" />
     <Content Include="Views\Shared\_CleanAdminLayout.cshtml" />
+    <Content Include="Views\Tickets\AssignTicket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
