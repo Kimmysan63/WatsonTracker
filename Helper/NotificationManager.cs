@@ -59,6 +59,7 @@ namespace WatsonTracker.Helper
             {
                 GenerateNotification(new TicketNotification
                 {
+                    TicketId = newTicket.Id,
                     RecipientId = newTicket.AssignedToUserId,
                     NotificationBody = $"The Title has changed for Ticket Id {newTicket.Id} from {oldTicket.Title} to { newTicket.Title }"
                 });
@@ -67,6 +68,7 @@ namespace WatsonTracker.Helper
             {
                 GenerateNotification(new TicketNotification
                 {
+                    TicketId = newTicket.Id,
                     RecipientId = newTicket.AssignedToUserId,
                     NotificationBody = $"The Description has changed for Ticket Id {newTicket.Id} from {oldTicket.Description} to { newTicket.Description }"
                 });
@@ -75,6 +77,7 @@ namespace WatsonTracker.Helper
             {
                 GenerateNotification(new TicketNotification
                 {
+                    TicketId = newTicket.Id,
                     RecipientId = newTicket.AssignedToUserId,
                     NotificationBody = $"The Ticket Type has changed for Ticket Id {newTicket.Id} from {oldTicket.TicketType.Name} to { newTicket.TicketType.Name }"
                 });
@@ -83,6 +86,7 @@ namespace WatsonTracker.Helper
             {
                 GenerateNotification(new TicketNotification
                 {
+                    TicketId = newTicket.Id,
                     RecipientId = newTicket.AssignedToUserId,
                     NotificationBody = $"The Ticket Status has changed for Ticket Id {newTicket.Id} from {oldTicket.TicketStatus.Name} to { newTicket.TicketStatus.Name }"
                 });
@@ -91,6 +95,7 @@ namespace WatsonTracker.Helper
             {
                 GenerateNotification(new TicketNotification
                 {
+                    TicketId = newTicket.Id,
                     RecipientId = newTicket.AssignedToUserId,
                     NotificationBody = $"The Ticket Priority has changed for Ticket Id {newTicket.Id} from {oldTicket.TicketPriority.Name} to { newTicket.TicketPriority.Name }"
                 });

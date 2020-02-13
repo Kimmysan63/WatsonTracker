@@ -11,6 +11,7 @@ namespace WatsonTracker.Models
         public string Name { get; set; }
         public string ProjectManagerId { get; set; }
         public string PMName { get; set; }
+        public bool IsDeleted { get; set; }
 
         public virtual ICollection<ApplicationUser> Users { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }

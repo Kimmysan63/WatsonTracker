@@ -119,7 +119,7 @@ namespace WatsonTracker.Controllers
         {
             if (User.IsInRole("Admin"))
             {
-                model = db.Projects.ToList();
+                model = db.Projects.Where(p => p.IsDeleted == false).ToList();
 
                 return View(model);
             }
@@ -242,7 +242,8 @@ namespace WatsonTracker.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Project project = db.Projects.Find(id);
-            db.Projects.Remove(project);
+            //remove db.Projects.Remove(project);   ***changed to soft delete below
+            project.IsDeleted = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

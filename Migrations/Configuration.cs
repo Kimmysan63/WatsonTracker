@@ -7,6 +7,7 @@ namespace WatsonTracker.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
     using WatsonTracker.Models;
+    using System.Web.Configuration;
 
     internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
@@ -56,6 +57,8 @@ namespace WatsonTracker.Migrations
 
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
+            var demoPassword = WebConfigurationManager.AppSettings["DemoPassword"];
+
             if (!context.Users.Any(u => u.Email == "kgycoder63@gmail.com"))
             {
                 var user = new ApplicationUser
@@ -66,7 +69,6 @@ namespace WatsonTracker.Migrations
                     LastName = "Yount",
                     DisplayName = "Kimmysan"
                 };
-
                 userManager.Create(user, "newKim2020");
 
                 userManager.AddToRoles(user.Id, new string[]
@@ -77,6 +79,16 @@ namespace WatsonTracker.Migrations
                     "Submitter"
                 });
             }
+            //var user = new ApplicationUser
+            //{
+            //    UserName = "Admin1@mailanator.com",
+            //    Email = "Admin1@mailanator.com",
+            //    FirstName = "Kim",
+            //    LastName = "Yount",
+            //    DisplayName = "Kimmysan"
+            //};
+
+
             if (!context.Users.Any(u => u.Email == "admin@demo.com"))
             {
                 var user = new ApplicationUser
@@ -94,6 +106,63 @@ namespace WatsonTracker.Migrations
                 {
                     "Admin"
                 });
+            }
+
+            if (!context.Users.Any(u => u.Email == "DemoAdmin@mailinator.com"))
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = "DemoAdmin@mailinator.com",
+                    Email = "DemoAdmin@mailinator.com",
+                    FirstName = "Jane",
+                    LastName = "Doe",
+                    DisplayName = "DEMOADMIN"
+                };
+                userManager.Create(user, demoPassword);
+                userManager.AddToRoles(user.Id, new string[] { "Admin" });
+
+            }
+            if (!context.Users.Any(u => u.Email == "DemoDev@mailinator.com"))
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = "DemoDev@mailinator.com",
+                    Email = "DemoDev@mailinator.com",
+                    FirstName = "Jupiter",
+                    LastName = "Doe",
+                    DisplayName = "DEMODEV"
+                };
+                userManager.Create(user, demoPassword);
+                userManager.AddToRoles(user.Id, new string[] { "Developer" });
+
+            }
+            if (!context.Users.Any(u => u.Email == "DemoSub@mailinator.com"))
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = "DemoSub@mailinator.com",
+                    Email = "DemoSub@mailinator.com",
+                    FirstName = "January",
+                    LastName = "Doe",
+                    DisplayName = "DEMOSUB"
+                };
+                userManager.Create(user, demoPassword);
+                userManager.AddToRoles(user.Id, new string[] { "Submitter" });
+
+            }
+            if (!context.Users.Any(u => u.Email == "DemoMgr@mailinator.com"))
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = "DemoMgr@mailinator.com",
+                    Email = "DemoMgr@mailinator.com",
+                    FirstName = "Juniper",
+                    LastName = "Doe",
+                    DisplayName = "DEMOMGR"
+                };
+                userManager.Create(user, demoPassword);
+                userManager.AddToRoles(user.Id, new string[] { "ProjectManager" });
+
             }
             if (!context.Users.Any(u => u.Email == "manager@demo.com"))
             {
@@ -326,3 +395,4 @@ namespace WatsonTracker.Migrations
         }
     }
 }
+
