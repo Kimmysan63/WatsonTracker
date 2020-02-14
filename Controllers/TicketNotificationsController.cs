@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -33,6 +34,8 @@ namespace WatsonTracker.Controllers
             {
                 return HttpNotFound();
             }
+            ticketNotification.HasBeenRead = true;
+            db.SaveChanges();
             return View(ticketNotification);
         }
 
@@ -42,6 +45,14 @@ namespace WatsonTracker.Controllers
             ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title");
             ViewBag.UserId = new SelectList(db.Users, "Id", "FirstName");
             return View();
+        }
+
+        // GET: List of Notifications
+        public ActionResult _NotificationBell()
+        {
+            var userId = User.Identity.GetUserId();
+            var listOfTicketNotifications = db.TicketNotifications.Where(t => t.RecipientId == userId).Where(n => n.HasBeenRead == false).ToList();
+            return View(listOfTicketNotifications);
         }
 
         // POST: TicketNotifications/Create

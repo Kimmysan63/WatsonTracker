@@ -1,7 +1,6 @@
 ﻿@model WatsonTracker.Models.RemoveUserRoleViewModel
-@{
-    ViewBag.Title = "RemoveUserRole";
-}
+@using WatsonTracker.Helper
+@{ var helper = new UserRolesHelper(); }
 
 <h2>RemoveUserRole</h2>
 
@@ -59,9 +58,9 @@
                 @item.FirstName @item.LastName
             </td>
             <td>
-                @foreach (var role in item.Roles)
+                @foreach (var role in helper.ListUserRoles(item.Id))
                 {
-                    <p>@role.RoleId</p>
+                    @role; <br />
                 }
             </td>
         </tr>

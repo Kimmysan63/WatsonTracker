@@ -56,37 +56,7 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-top-links navbar-right pull-right">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle waves-effect waves-light font-20" data-toggle="dropdown" href="javascript:void(0);">
-                            <i class="icon-speech"></i>
-                            <span class="badge badge-xs badge-danger">6</span>
-                        </a>
-                        <ul class="dropdown-menu mailbox animated bounceInDown">
-                            <li>
-                                <div class="drop-title">You have 4 new messages</div>
-                            </li>
-                            <li>
-                                <div class="message-center">
-                                    <a href="javascript:void(0);">
-                                        <div class="user-img">
-                                            <img src="~/Template/Cubic/plugins/images/users/1.jpg" alt="user" class="img-circle">
-                                            <span class="profile-status online pull-right"></span>
-                                        </div>
-                                        <div class="mail-contnet">
-                                            <h5>Pavan kumar</h5>
-                                            <span class="mail-desc">Just see the my admin!</span>
-                                            <span class="time">9:30 AM</span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                            <li>
-                                <a class="text-center" href="javascript:void(0);">
-                                    <strong>See all notifications</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </li>
-                        </ul>
+                    <li>@Html.Action("_NotificationBell", "TicketNotifications")
                     </li>
                     <li>
                         @Html.Partial("_LoginPartial")
@@ -129,16 +99,16 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li> <a href="@Url.Action("Login", "Account")">Login</a> </li>
                                 <li> <a href="@Url.Action("ResetPassword", "Account")">Reset Password</a> </li>
-                                @*<li> <a href="@Url.Action("AssignProjectManagerToProject", "Projects")">Assign Project Manager to Project</a> </li>*@
+                                <li> <a href="@Url.Action("ChangeName", "Manage")">Change Name</a> </li>
                             </ul>
 
                         </li>
                         <li>
                             <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-people fa-fw"></i> <span class="hide-menu"> Roles Manager </span></a>
                             <ul aria-expanded="false" class="collapse">
-                                @*<li> <a href="index4.html">Dashboard</a> </li>
-                                <li> <a href="products.html">Products</a> </li>
-                                <li> <a href="product-detail.html">Product Detail</a> </li>*@
+                                <li> <a href="@Url.Action("AssignUserRole", "Roles")">Assign User Role</a> </li>
+                                <li> <a href="@Url.Action("RemoveUserRole", "Roles")">Remove User From Role</a> </li>
+                                @*<li> <a href="product-detail.html">Product Detail</a> </li>*@
                             </ul>
                         </li>
                         <li>
@@ -201,12 +171,12 @@
     <script src="~/Template/Cubic/cubic-html/js/db1.js"></script>
     <!-- ===== Style Switcher JS ===== -->
     <script src="~/Template/Cubic/plugins/components/styleswitcher/jQuery.style.switcher.js"></script>
+<script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+<script>$('.table').DataTable();</script>
 </body>
 
 </html>
 
 @RenderSection("scripts", required: false)
-@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-<script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
-<script>$('.table').DataTable();</script>
+@*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/bootstrap")*@

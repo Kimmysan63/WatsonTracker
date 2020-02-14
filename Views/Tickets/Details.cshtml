@@ -127,8 +127,6 @@
                     </div>
                 </li>
             </ol>
-
-
         }
     </div>
 
@@ -198,3 +196,60 @@
         }
     }
 </div>
+
+@*Ticket histories*@
+<div class="comment-main">
+    <h3 class="blog-title">Histories (@Model.Histories.Count)<span></span></h3>
+    <div class="row">
+
+        @foreach (var history in Model.Histories)
+        {
+
+        }
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Property
+            </th>
+            <th>
+                Old Value
+            </th>
+            <th>
+                New Value
+            </th>
+            <th>
+                Created
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.Histories)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Property)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OldValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NewValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Changed)
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+
+
+
+

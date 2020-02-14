@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using WatsonTracker.Helper;
 using WatsonTracker.Models;
 
 namespace WatsonTracker.Controllers
@@ -59,6 +60,7 @@ namespace WatsonTracker.Controllers
                 ticketComment.TicketId = ticketId;
                 db.TicketComments.Add(ticketComment);
                 db.SaveChanges();
+                NotificationManager.ManageCommentNotifications(ticketComment);
                 return RedirectToAction("Details", "Tickets", new { id = ticketId });
             }
 

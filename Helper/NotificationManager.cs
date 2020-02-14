@@ -14,6 +14,7 @@ namespace WatsonTracker.Helper
             //Determine if DeveloperId has changed.  Either assigned, unassigned, reassigned.
             ManageGeneralAssignmentNotification(oldTicket, newTicket);
             ManagePropertyChangeNotifications(oldTicket, newTicket);
+            //ManageAttachmentNotifications(ticketAttachment);
 
         }
         private static void ManageGeneralAssignmentNotification(Ticket oldTicket, Ticket newTicket)
@@ -52,8 +53,7 @@ namespace WatsonTracker.Helper
         private static void ManagePropertyChangeNotifications(Ticket oldTicket, Ticket newTicket)
         {
             //if (newTicket.AssignedToUserId != null)
-
-            //Here I will use a few if statements to manually compare a few Ticket props
+            //Manually compare Ticket properties
 
             if (oldTicket.Title != newTicket.Title)
             {
@@ -105,9 +105,22 @@ namespace WatsonTracker.Helper
 
         public static void ManageAttachmentNotifications(TicketAttachment ticketAttachment)
         {
-
+            GenerateNotification(new TicketNotification
+            {
+                TicketId = ticketAttachment.TicketId,
+                RecipientId = ticketAttachment.UserId,
+                NotificationBody = $"A new attachment has been added for Ticket Id {ticketAttachment.TicketId}"
+            });
         }
-
+        public static void ManageCommentNotifications(TicketComment ticketComment)
+        {
+            GenerateNotification(new TicketNotification
+            {
+                TicketId = ticketComment.TicketId,
+                RecipientId = ticketComment.UserId,
+                NotificationBody = $"A new comment has been added for Ticket Id {ticketComment.TicketId}.  "
+            });
+        }
 
         private static void GenerateNotification(TicketNotification notification)
         {
@@ -126,5 +139,6 @@ namespace WatsonTracker.Helper
             db.TicketNotifications.Add(newNotification);
             db.SaveChanges();
         }
+
     }
 }

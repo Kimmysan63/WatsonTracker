@@ -3873,10 +3873,10 @@
     <Content Include="Template\Cubic\plugins\components\tablesaw-master\test\.jshintrc" />
     <Content Include="Template\Cubic\plugins\images\assets\photothumb.db" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
+    <Content Include="Views\TicketNotifications\_NotificationBell.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ChangeName\" />
     <Folder Include="Views\RemoveUserRoleViewModel\" />
     <Folder Include="Views\RemoveUserRole\" />
   </ItemGroup>

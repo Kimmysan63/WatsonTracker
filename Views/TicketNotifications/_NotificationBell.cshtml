@@ -1,0 +1,37 @@
+﻿@model List<WatsonTracker.Models.TicketNotification>
+
+@{ Layout = null;}
+
+<li class="dropdown">
+    <a class="dropdown-toggle waves-effect waves-light font-20" data-toggle="dropdown" href="javascript:void(0);">
+        <i class="icon-speech"></i>
+        <span class="badge badge-xs badge-danger">@Model.Count</span>
+    </a>
+    <ul class="dropdown-menu mailbox animated bounceInDown">
+        <li>
+            <div class="drop-title">You have @Model.Count Notification(s)</div>
+        </li>
+        <li>
+            <div class="message-center">
+                @foreach (var item in Model)
+                {
+                    <a href="@Url.Action("Details", "TicketNotifications", new { id = item.Id })">
+                        <div class="user-img">
+                            <i class="fa fa-ticket"></i>
+                        </div>
+                        <div class="mail-contnet">
+                            <span class="mail-desc">@item.NotificationBody</span>
+                            <span class="time">@item.Created</span>
+                        </div>
+                    </a>
+                }
+            </div>
+        </li>
+        <li>
+            <a class="text-center" href="@Url.Action("Index", "TicketNotifications")">
+                <strong>See all notifications</strong>
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+    </ul>
+</li>
