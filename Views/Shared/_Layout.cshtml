@@ -92,25 +92,26 @@
                 <nav class="sidebar-nav">
                     <ul id="side-menu">
                         <li>
-                            <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-screen-desktop fa-fw"></i> <span class="hide-menu"> Dashboard </span></a>
+                            <a class="active waves-effect" href="@Url.Action("Index", "Home")" aria-expanded="false"><i class="icon-screen-desktop fa-fw"></i> <span class="hide-menu"> Dashboard </span></a>
+
                         </li>
                         <li>
                             <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-folder fa-fw"></i> <span class="hide-menu"> Account Management </span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li> <a href="@Url.Action("Login", "Account")">Login</a> </li>
-                                <li> <a href="@Url.Action("ResetPassword", "Account")">Reset Password</a> </li>
+                                <li> <a href="@Url.Action("ChangePassword", "Manage")">Reset Password</a> </li>
                                 <li> <a href="@Url.Action("ChangeName", "Manage")">Change Name</a> </li>
                             </ul>
-
                         </li>
                         <li>
                             <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-people fa-fw"></i> <span class="hide-menu"> Roles Manager </span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li> <a href="@Url.Action("AssignUserRole", "Roles")">Assign User Role</a> </li>
                                 <li> <a href="@Url.Action("RemoveUserRole", "Roles")">Remove User From Role</a> </li>
-                                @*<li> <a href="product-detail.html">Product Detail</a> </li>*@
+                                <li> <a href="@Url.Action("Index", "Roles")">User Index</a> </li>
                             </ul>
                         </li>
+
                         <li>
                             <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-briefcase fa-fw"></i> <span class="hide-menu"> Projects </span></a>
                             <ul aria-expanded="false" class="collapse">
@@ -120,11 +121,12 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-basket-loaded fa-fw"></i> <span class="hide-menu"> Tickets </span></a>
+                            <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-layers fa-fw"></i> <span class="hide-menu"> Tickets </span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="@Url.Action("AllTicketIndex", "Tickets")">All Tickets Index</a></li>
                                 <li><a href="@Url.Action("Index", "Tickets")">User Specific Tickets</a></li>
-                                @*<li><a href="portlet-draggable.html">Draggable Portlet</a></li>*@
+                                <li><a href="@Url.Action("Create", "Tickets")"> Create Tickets</a></li>
+
                             </ul>
                         </li>
                     </ul>
@@ -173,10 +175,10 @@
     <script src="~/Template/Cubic/plugins/components/styleswitcher/jQuery.style.switcher.js"></script>
 <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
 <script>$('.table').DataTable();</script>
+@RenderSection("scripts", required: false)
 </body>
 
 </html>
 
-@RenderSection("scripts", required: false)
 @*@Scripts.Render("~/bundles/jquery")*@
     @*@Scripts.Render("~/bundles/bootstrap")*@

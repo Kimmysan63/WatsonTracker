@@ -1,11 +1,16 @@
 ﻿@model WatsonTracker.ViewModels.TicketIndexVM
+<style>
+    .priorityUrgent {
+        color: red;
+        font-weight: bold;
+    }
+</style>
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Tickets Index</h2>
-
 <table class="table">
     <thead>
         <tr>
@@ -46,46 +51,57 @@
 
         @foreach (var item in Model.MyTickets)
         {
-            <tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnerUser.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.Name)
+            </td>
+            @if (item.TicketPriority.Name == "Urgent")
+            {
                 <td>
-                    @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
+                    <span class="priorityUrgent">
+                        @Html.DisplayFor(model => item.TicketPriority.Name)
+                    </span>
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OwnerUser.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Project.Name)
-                </td>
+            }
+            else
+            {
                 <td>
                     @Html.DisplayFor(modelItem => item.TicketPriority.Name)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TicketStatus.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TicketType.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Created)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Updated)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
-                    {
-                        @Html.ActionLink("Assign Ticket", "AssignTicket", new { id = item.Id })
-                    }
-                </td>
-            </tr>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketStatus.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketType.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Updated)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
+                {
+                    @Html.ActionLink("Assign Ticket", "AssignTicket", new { id = item.Id })
+                }
+            </td>
+        </tr>
         }
 
     </tbody>

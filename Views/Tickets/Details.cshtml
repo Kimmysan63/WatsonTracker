@@ -3,6 +3,21 @@
 @{
     ViewBag.Title = "Details";
 }
+<style>
+    b {
+        color: blue;
+    }
+
+    .inDevStatus {
+        color: limegreen;
+        font-weight: bold;
+    }
+
+    .newStatus {
+        color: deeppink;
+        font-weight: bold;
+    }
+</style>
 
 <h2>Details</h2>
 
@@ -10,71 +25,91 @@
     <h4>Ticket</h4>
     <hr />
     <dl class="dl-horizontal">
+        <div class="row">
+            <div class="columnn col-md-6">
+                <dt>
+                    <b>Assigned To Name</b>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.AssignedToUser.FirstName)
+                </dd>
+
+                <dt>
+                    <b>Submitter's Name</b>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.OwnerUser.FirstName)
+                </dd>
+
+                <dt>
+                    <b>Project Name</b>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Project.Name)
+                </dd>
+                <dt>
+                    <b>Ticket Title</b>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+                <dt>
+                    <b>Ticket Description</b>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+
+                </dd>
+
+            </div>
+            <div class="columnn col-md-6">
+                <dt>
+                    <b>Ticket Status</b>
+                </dt>
+                @if (Model.TicketStatus.Name == "New")
+                {
+                    <dd>
+                        <span class="newStatus">
+                            @Html.DisplayFor(model => model.TicketStatus.Name)
+                        </span>
+                    </dd>
+                }
+                else if (Model.TicketStatus.Name == "In Development")
+                {
+                    <dd>
+                        <span class="inDevStatus">@Html.DisplayFor(model => model.TicketStatus.Name)</span>
+                    </dd>
+
+                }
+                else
+                {
+                    <dd>
+                        @Html.DisplayFor(model => model.TicketStatus.Name)
+                    </dd>
+                }
+                <dt>
+                    <b>Ticket Priority</b>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TicketPriority.Name)
         <dt>
-            Assigned To Name
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AssignedToUser.FirstName)
-        </dd>
-
-        <dt>
-            Submitter's Name
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OwnerUser.FirstName)
-        </dd>
-
-        <dt>
-            Project Name
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Project.Name)
-        </dd>
-
-        <dt>
-            Ticket Priority
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TicketPriority.Name)
-        </dd>
-
-        <dt>
-            Ticket Status
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TicketStatus.Name)
-        </dd>
-
-        <dt>
-            Ticket Type
+            <b>Ticket Type</b>
 
         <dd>
             @Html.DisplayFor(model => model.TicketType.Name)
         </dd>
 
-        <dt>
-            Ticket Title
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
 
         <dt>
-            Ticket Description
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            Created Date
+            <b>Created Date</b>
         </dt>
 
         <dd>
@@ -82,172 +117,190 @@
         </dd>
 
         <dt>
-            Updated
+            <b>Updated</b>
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Updated)
         </dd>
 
+</div>
+</div>
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<hr />
+
 
 @*Add Comments Section*@
-<div class="comment-main">
-    <h3 class="blog-title">Comments (@Model.Comments.Count)<span></span></h3>
-    <div class="row">
-        @foreach (var item in Model.Comments)
-        {
+<div id="accordion">
+    <div class="white-box">
+        <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="#collapseOne">Click to Display Comments (@Model.Comments.Count)</a>
+        </div>
+        <div id="collapseOne" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+                @foreach (var item in Model.Comments)
+                {
 
-            <ol class="comments">
-                <li class="comment even thread-even depth-1" id="comment-1">
-                    <div id="div-comment-1" class="comment-wrap">
-                        @*<div class="comment-theme">
-                                <div class="comment-image">
-                                    <img src="~/Template/assets/images/comment/OIP.jfif" alt="Jhon">
+                    <ol class="comments">
+                        <li class="comment even thread-even depth-1" id="comment-1">
+                            <div id="div-comment-1" class="comment-wrap">
+                                <div class="comment-main-area">
+                                    <div class="comment-wrapper">
+                                        <div class="sewl-comments-meta">
+                                            <h4><a href="#">@item.User.FirstName</a></h4>
+                                        </div>
+                                        <div class="comment-area">
+                                            <p>@Html.Raw(item.Comment)</p>
+                                            @Html.ActionLink("Edit", "Edit", "TicketComments", new { id = item.Id }, new { @class = "btn btn-warning" }) <span>|</span>
+                                            @Html.ActionLink("Delete", "Delete", "TicketComments", new { id = item.Id }, new { @class = "btn btn-warning" })
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>*@
-                        <div class="comment-main-area">
-                            <div class="comment-wrapper">
-                                <div class="sewl-comments-meta">
-                                    <h4><a href="#">@item.User.FirstName</a></h4>
+
+                            </div>
+                        </li>
+                    </ol>
+                }
+
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    using (Html.BeginForm("Create", "TicketComments", new { ticketId = Model.Id }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            <div class="container">
+                                <h4>Comment</h4>
+                                <hr />
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    <div class="col-md-10">
+                                        <textarea name="Comment" id="Comment" placeholder="Type your comment" class="form-control"></textarea>
+                                    </div>
                                 </div>
-                                <div class="comment-area">
-                                    <p>@Html.Raw(item.Comment)</p>
-                                    @Html.ActionLink("Edit", "Edit", "Comments", new { id = item.Id }, new { @class = "btn btn-warning" }) <span>|</span>
-                                    @Html.ActionLink("Delete", "Delete", "Comments", new { id = item.Id }, new { @class = "btn btn-warning" })
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Add Comment" class="btn btn-default" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                </li>
-            </ol>
-        }
-    </div>
-
-
-    @if (User.Identity.IsAuthenticated)
-    {
-        using (Html.BeginForm("Create", "TicketComments", new { ticketId = Model.Id }, FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            <div class="form-horizontal">
-                <div class="container">
-                    <h4>Comment</h4>
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        <div class="col-md-10">
-                            <textarea name="Comment" id="Comment" placeholder="Type your comment" class="form-control"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Add Comment" class="btn btn-default" />
-                        </div>
-                    </div>
-                </div>
+                    }
+                }
             </div>
-        }
-    }
+        </div>
 
+    </div>
 </div>
+
 
 @*Attachments Section*@
 
+<div id="accordion">
+    <div class="white-box">
+        <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="#collapseTwo">Click to Display Attachments (@Model.Attachments.Count)</a>
+        </div>
+        <div id="collapseTwo" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+                @foreach (var attachment in Model.Attachments)
+                {
+                    <div class="row">
+                        <div class="col-md-7">
+                            <a href="@attachment.FilePath">@attachment.FilePath.Remove(0, 13)</a>
+                        </div>
+                        <div class="col-md-5">
+                            <img src="attachment.FilePath)" style="width:40px;" />
+                        </div>
+                    </div>
 
-
-<div class="comment-main">
-    <h3 class="blog-title">Attachments (@Model.Attachments.Count)<span></span></h3>
-    <div class="row">
-        @foreach (var attachment in Model.Attachments)
-        {
-            <div class="row">
-                <div class="col-md-7">
-                    <a href="@attachment.FilePath">@attachment.FilePath.Remove(0, 13)</a>
-                </div>
-                <div class="col-md-5">
-                    <img src="attachment.FilePath)" style="width:40px;" />
-                </div>
+                }
             </div>
 
-        }
+            @if (User.Identity.IsAuthenticated)
+            {
+                using (Html.BeginForm("Create", "TicketAttachments", new { ticketId = Model.Id }, FormMethod.Post, new { enctype = "Multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <input name="attachment" type="file" class="form-control" id="fileUpload" />
+                        </div>
+                        <div class="form-group col-md-12">
+                            <button type="submit" class="btn btn-primary">Submit Attachment</button>
+                        </div>
+                    </div>
+
+                }
+            }
+        </div>
     </div>
-
-    @if (User.Identity.IsAuthenticated)
-    {
-        using (Html.BeginForm("Create", "TicketAttachments", new { ticketId = Model.Id }, FormMethod.Post, new { enctype = "Multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <input name="attachment" type="file" class="form-control" id="fileUpload" />
-                </div>
-                <div class="form-group col-md-12">
-                    <button type="submit" class="btn btn-primary">Submit Attachment</button>
-                </div>
-            </div>
-
-        }
-    }
 </div>
 
 @*Ticket histories*@
-<div class="comment-main">
-    <h3 class="blog-title">Histories (@Model.Histories.Count)<span></span></h3>
-    <div class="row">
 
-        @foreach (var history in Model.Histories)
-        {
 
-        }
+
+<div id="accordion">
+    <div class="white-box">
+        <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="#collapseThree">Click to Display Histories (@Model.Histories.Count)</a>
+        </div>
+        <div id="collapseThree" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+                @foreach (var history in Model.Histories)
+                {
+
+                }
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Property
+                            </th>
+                            <th>
+                                Old Value
+                            </th>
+                            <th>
+                                New Value
+                            </th>
+                            <th>
+                                Created
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.Histories)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Property)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OldValue)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NewValue)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Changed)
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Property
-            </th>
-            <th>
-                Old Value
-            </th>
-            <th>
-                New Value
-            </th>
-            <th>
-                Created
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var item in Model.Histories)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Property)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OldValue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NewValue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Changed)
-                </td>
-            </tr>
-        }
-
-    </tbody>
-</table>
-
 
 
 

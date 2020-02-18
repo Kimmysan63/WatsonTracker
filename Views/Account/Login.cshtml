@@ -81,72 +81,61 @@
                     </div>
                 }
             </div>
+
+            <div class="well well-sm">
+                <center>
+                    <h5>Give it a go!  Sign in as a Demo User.</h5>
+                </center>
+                <div class="row">
+                    @using (Html.BeginForm("DemoAsyncLogin", "Account", FormMethod.Post, new { @class = "col-md-6" }))
+                    {
+
+                        @Html.AntiForgeryToken()
+
+                        @Html.Hidden("emailKey", "DemoDevEmail")
+
+                        <div class="m-b-5">
+                            <button class="btn btn-warning btn-rounded btn-block">Log in as Developer</button>
+                        </div>
+
+                    }
+                    @using (Html.BeginForm("DemoAsyncLogin", "Account", FormMethod.Post, new { @class = "col-md-6" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.Hidden("emailKey", "DemoSubEmail")
+
+                        <div class="m-b-5">
+                            <button class="btn btn-danger btn-rounded btn-block">Log in as Submitter</button>
+                        </div>
+
+                    }
+
+                    @using (Html.BeginForm("DemoAsyncLogin", "Account", FormMethod.Post, new { @class = "col-md-6" }))
+                    {
+
+                        @Html.AntiForgeryToken()
+
+                        @Html.Hidden("emailKey", "DemoMgrEmail")
+
+                        <div>
+                            <button class="btn btn-info btn-rounded btn-block">Log in as Proj Mgr</button>
+                        </div>
+
+                    }
+                    @using (Html.BeginForm("DemoAsyncLogin", "Account", FormMethod.Post, new { @class = "col-md-6" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.Hidden("emailKey", "DemoAdminEmail")
+
+                        <div>
+                            <button class="btn btn-primary btn-rounded btn-block">Log in as Admin</button>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
-        @using (Html.BeginForm("DemoAsyncLogin", "Account", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-
-            @Html.Hidden("emailKey", "DemoAdminEmail")
-
-            <div>
-                <div class="row">
-                    <div class="col-lg-4 offset-4">
-                        <button class="btn btn-primary">Log in as Admin</button>
-                    </div>
-                </div>
-            </div>
-        }
-
-
-        @using (Html.BeginForm("DemoAsyncLogin", "Account", FormMethod.Post))
-        {
-
-            @Html.AntiForgeryToken()
-
-            @Html.Hidden("emailKey", "DemoDevEmail")
-
-            <div>
-                <div class="row">
-                    <div class="col-lg-4 offset-4">
-                        <button class="btn btn-primary">Log in as Developer</button>
-                    </div>
-                </div>
-            </div>
-
-        }
-        @using (Html.BeginForm("DemoAsyncLogin", "Account", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-
-            @Html.Hidden("emailKey", "DemoSubEmail")
-
-            <div>
-                <div class="row">
-                    <div class="col-lg-4 offset-4">
-                        <button class="btn btn-primary">Log in as Submitter</button>
-                    </div>
-                </div>
-            </div>
-
-        }
-
-        @using (Html.BeginForm("DemoAsyncLogin", "Account", FormMethod.Post))
-        {
-
-            @Html.AntiForgeryToken()
-
-            @Html.Hidden("emailKey", "DemoMgrEmail")
-
-            <div>
-                <div class="row">
-                    <div class="col-lg-4 offset-4">
-                        <button class="btn btn-primary">Log in as Manager</button>
-                    </div>
-                </div>
-            </div>
-
-        }
-
 
     </section>
     <!-- jQuery -->

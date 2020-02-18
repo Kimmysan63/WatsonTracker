@@ -74,5 +74,14 @@ namespace WatsonTracker.Controllers
 
         }
 
+        // GET: Roles
+        public ActionResult Index()
+        {
+            ICollection<ApplicationUser> userList = db.Users.ToList();
+
+            return View(userList);
+        }
+
     }
+
 }

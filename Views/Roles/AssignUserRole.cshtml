@@ -21,7 +21,7 @@
     <div class="form-group">
         @Html.Label("User List", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.UserId, null, htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.UserId, null, "--Select--", htmlAttributes: new { @class = "form-control" })
             @*@Html.ValidationMessageFor(model => model.UserList, "", new { @class = "text-danger" })*@
         </div>
     </div>
@@ -29,7 +29,7 @@
     <div class="form-group">
         @Html.Label("Role List", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.RoleName, null, htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.RoleName, null, "--Select--", htmlAttributes: new { @class = "form-control" })
             @*@Html.ValidationMessageFor(model => model.RoleList, "", new { @class = "text-danger" })*@
         </div>
     </div>
@@ -62,7 +62,26 @@
                 <td>
                     @foreach (var role in helper.ListUserRoles(item.Id))
                     {
-                        @role; <br />
+                       string roleTag = "";
+                        {
+                            if(role == "Admin")
+                            {
+                                roleTag = "label-success";
+                            }
+                            else if(role == "ProjectManager")
+                            {
+                                roleTag = "label-info";
+                            }
+                            else if(role == "Developer")
+                            {
+                                roleTag = "label-primary";
+                            }
+                            else
+                            {
+                                roleTag = "label-danger";
+                            }
+                        }
+                        <label class="label @roleTag">@role</label> <br />
                     }
                 </td>
             </tr>
@@ -72,5 +91,5 @@
 </table>
 @section scripts
     {
-@*<script>$('.table').DataTable();</script>*@
+
     }

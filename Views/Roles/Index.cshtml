@@ -1,0 +1,59 @@
+﻿@model ICollection<WatsonTracker.Models.ApplicationUser>
+
+@using WatsonTracker.Helper
+@{ var helper = new UserRolesHelper(); }
+
+
+<h2>User / Roles Index</h2>
+
+
+<table class="table" id="mytable">
+    <thead>
+        <tr>
+            <th>
+                User Name
+            </th>
+            <th>
+                Roles
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.FirstName @item.LastName
+                </td>
+                <td>
+                    @foreach (var role in helper.ListUserRoles(item.Id))
+                    {
+                        string roleTag = "";
+                        {
+                            if (role == "Admin")
+                            {
+                                roleTag = "label-success";
+                            }
+                            else if (role == "ProjectManager")
+                            {
+                                roleTag = "label-info";
+                            }
+                            else if (role == "Developer")
+                            {
+                                roleTag = "label-primary";
+                            }
+                            else
+                            {
+                                roleTag = "label-danger";
+                            }
+                        }
+                        <label class="label @roleTag">@role</label> <br />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
