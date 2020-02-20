@@ -170,6 +170,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChartsController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
@@ -179,6 +181,7 @@
     <Compile Include="Controllers\TicketHistoriesController.cs" />
     <Compile Include="Controllers\TicketNotificationsController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
+    <Compile Include="DataModels\ChartJsBarData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -196,6 +199,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="ViewModels\DashboardVM.cs" />
     <Compile Include="ViewModels\RemoveUserFromProjectViewModel.cs" />
     <Compile Include="ViewModels\RemoveUserRoleViewModel.cs" />
     <Compile Include="Models\Ticket.cs" />
@@ -3879,6 +3883,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Charts\" />
+    <Folder Include="Views\Dashboard\" />
     <Folder Include="Views\RemoveUserRoleViewModel\" />
     <Folder Include="Views\RemoveUserRole\" />
   </ItemGroup>

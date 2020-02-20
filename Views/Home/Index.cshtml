@@ -1,250 +1,143 @@
 ﻿@*!DOCTYPE html>*@
-<html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
-    <title>Cubic Admin Template</title>
-    <!-- ===== Bootstrap CSS ===== -->
-    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- ===== Plugin CSS ===== -->
-    <link href="../plugins/components/chartist-js/dist/chartist.min.css" rel="stylesheet">
-    <link href="../plugins/components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
-    <!-- ===== Animation CSS ===== -->
-    <link href="css/animate.css" rel="stylesheet">
-    <!-- ===== Custom CSS ===== -->
-    <link href="css/style.css" rel="stylesheet">
-    <!-- ===== Color CSS ===== -->
-    <link href="css/colors/default.css" id="theme" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
 
-</html>
 <!-- ===== Page-Container ===== -->
-<div class="container-fluid">
-    <div class="row colorbox-group-widget">
-        <div class="col-md-3 col-sm-6 info-color-box">
-            <div class="white-box">
-                <div class="media bg-primary">
-                    <div class="media-body">
-                        <h3 class="info-count">154 <span class="pull-right"><i class="mdi mdi-checkbox-marked-circle-outline"></i></span></h3>
-                        <p class="info-text font-12">Bookings</p>
-                        <p class="info-ot font-15">Target<span class="label label-rounded">198</span></p>
+    <div class="container-fluid">
+        <div class="row colorbox-group-widget">
+            <div class="col-md-3 col-sm-6 info-color-box">
+                <div class="white-box">
+                    <div class="media bg-primary">
+                        <div class="media-body">
+                            <h3 class="info-count">*need* <span class="pull-right"><i class="mdi mdi-ticket"></i></span></h3>
+                            <p class="info-text font-12">Open Tickets</p>
+                            <p class="info-ot font-15">Unassigned<span class="label label-rounded">*need*</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 info-color-box">
+                <div class="white-box">
+                    <div class="media bg-success">
+                        <div class="media-body">
+                            <h3 class="info-count">*need* <span class="pull-right"></span></h3>
+                            <p class="info-text font-12">Open Projects</p>
+                            <h3 class="info-count"><span class="pull-right"><i class="mdi mdi-briefcase-check"></i></span></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 info-color-box">
+                <div class="white-box">
+                    <div class="media bg-danger">
+                        <div class="media-body">
+                            <h3 class="info-count">*need* <span class="pull-right"><i class="mdi mdi-ticket-percent"></i></span></h3>
+                            <p class="info-text font-12">Urgent Tickets</p>
+                            <p class="info-ot font-15">High Priority<span class="label label-rounded">*need*</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 info-color-box">
+                <div class="white-box">
+                    <div class="media bg-warning">
+                        <div class="media-body">
+                            <h3 class="info-count">*need*</h3>
+                            <p class="info-text font-12">Users</p>
+                            <h3 class="info-count"><span class="pull-right"><i class="mdi mdi-account-card-details"></i></span></h3>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6 info-color-box">
-            <div class="white-box">
-                <div class="media bg-success">
-                    <div class="media-body">
-                        <h3 class="info-count">68 <span class="pull-right"><i class="mdi mdi-comment-text-outline"></i></span></h3>
-                        <p class="info-text font-12">Complaints</p>
-                        <p class="info-ot font-15">Total Pending<span class="label label-rounded">154</span></p>
-                    </div>
+        <div class="row">
+            <div class="col-md-7">
+                <div class="white-box">
+                    <h3 class="box-title">Ticket Priorities - Top 4 Projects</h3>
+                    <div id="morris-bar-chart"></div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="white-box order-chart-widget">
+                    <h4 class="box-title">Last 10 Tickets Created</h4>
+                    <div id="order-status-chart" style="height: 250px;"></div>
+                    <ul class="list-inline m-b-0 m-t-20 t-a-c">
+                        <li>
+                            <h6 class="font-15"><i class="fa fa-circle m-r-5 text-primary"></i>Orders</h6>
+                        </li>
+                        <li>
+                            <h6 class="font-15"><i class="fa fa-circle m-r-5 text-danger"></i>Pending</h6>
+                        </li>
+                        <li>
+                            <h6 class="font-15"><i class="fa fa-circle m-r-5 text-success"></i>Delivered</h6>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6 info-color-box">
-            <div class="white-box">
-                <div class="media bg-danger">
-                    <div class="media-body">
-                        <h3 class="info-count">&#36;9475 <span class="pull-right"><i class="mdi mdi-coin"></i></span></h3>
-                        <p class="info-text font-12">Profit</p>
-                        <p class="info-ot font-15">Pending<span class="label label-rounded">236</span></p>
+
+        @*<div class="row">
+            <div class="col-md-8 col-sm-12">
+                <div class="white-box stat-widget">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3">
+                            <h4 class="box-title">Sales Statistics</h4>
+                        </div>
+                        <div class="col-md-9 col-sm-9">
+                            <select class="custom-select">
+                                <option selected value="0">Feb 04 - Mar 03</option>
+                                <option value="1">Mar 04 - Apr 03</option>
+                                <option value="2">Apr 04 - May 03</option>
+                                <option value="3">May 04 - Jun 03</option>
+                            </select>
+                            <ul class="list-inline">
+                                <li>
+                                    <h6 class="font-15"><i class="fa fa-circle m-r-5 text-success"></i>Product-A</h6>
+                                </li>
+                                <li>
+                                    <h6 class="font-15"><i class="fa fa-circle m-r-5 text-primary"></i>Product-B</h6>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="stat chart-pos"></div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6 info-color-box">
-            <div class="white-box">
-                <div class="media bg-warning">
-                    <div class="media-body">
-                        <h3 class="info-count">&#36;124,356 <span class="pull-right"><i class="mdi mdi-coin"></i></span></h3>
-                        <p class="info-text font-12">Total Profit</p>
-                        <p class="info-ot font-15">Pending<span class="label label-rounded">782</span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>    <div class="row">
-        <div class="col-md-8 col-sm-12">
-            <div class="white-box stat-widget">
-                <div class="row">
-                    <div class="col-md-3 col-sm-3">
-                        <h4 class="box-title">Sales Statistics</h4>
-                    </div>
-                    <div class="col-md-9 col-sm-9">
-                        <select class="custom-select">
-                            <option selected value="0">Feb 04 - Mar 03</option>
-                            <option value="1">Mar 04 - Apr 03</option>
-                            <option value="2">Apr 04 - May 03</option>
-                            <option value="3">May 04 - Jun 03</option>
-                        </select>
-                        <ul class="list-inline">
-                            <li>
-                                <h6 class="font-15"><i class="fa fa-circle m-r-5 text-success"></i>Product-A</h6>
-                            </li>
-                            <li>
-                                <h6 class="font-15"><i class="fa fa-circle m-r-5 text-primary"></i>Product-B</h6>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="stat chart-pos"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-12">
-            <div class="white-box order-chart-widget">
-                <h4 class="box-title">Order Status</h4>
-                <div id="order-status-chart" style="height: 250px;"></div>
-                <ul class="list-inline m-b-0 m-t-20 t-a-c">
-                    <li>
-                        <h6 class="font-15"><i class="fa fa-circle m-r-5 text-primary"></i>Orders</h6>
-                    </li>
-                    <li>
-                        <h6 class="font-15"><i class="fa fa-circle m-r-5 text-danger"></i>Pending</h6>
-                    </li>
-                    <li>
-                        <h6 class="font-15"><i class="fa fa-circle m-r-5 text-success"></i>Delivered</h6>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="white-box user-table">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h4 class="box-title">Table Format/User Data</h4>
-                    </div>
-                    <div class="col-sm-6">
-                        <select class="custom-select">
-                            <option selected>Sort the list by</option>
-                            <option value="1">Product</option>
-                            <option value="2">Customer</option>
-                            <option value="3">Location</option>
-                            <option value="4">Quantity</option>
-                            <option value="5">Status</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <div class="checkbox checkbox-info">
-                                        <input id="c1" type="checkbox">
-                                        <label for="c1"></label>
-                                    </div>
-                                </th>
-                                <th>Product</th>
-                                <th>Customer</th>
-                                <th>Location</th>
-                                <th>Quantity</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="checkbox checkbox-info">
-                                        <input id="c2" type="checkbox">
-                                        <label for="c2"></label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <img src="../plugins/images/p1.png" alt="product" width="60" height="60">
-                                    <a href="javascript:void(0);" class="p-l-25 text-link">Mobile</a>
-                                </td>
-                                <td>Daniel Kristeen</td>
-                                <td>Texas, US</td>
-                                <td>1</td>
-                                <td><span class="label label-success">Complete</span></td>
-                                <td>
-                                    <a href="javascript:void(0);" class="btn btn-default btn-outline font-16"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="checkbox checkbox-info">
-                                        <input id="c3" type="checkbox">
-                                        <label for="c3"></label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <img src="../plugins/images/p2.png" alt="product" width="60" height="60">
-                                    <a href="javascript:void(0);" class="p-l-25 text-link">Headphone</a>
-                                </td>
-                                <td>Hanna Gover</td>
-                                <td>Los Angeles, US</td>
-                                <td>2</td>
-                                <td><span class="label label-info">On Hold</span> </td>
-                                <td>
-                                    <a href="javascript:void(0);" class="btn btn-default btn-outline font-16"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="checkbox checkbox-info">
-                                        <input id="c4" type="checkbox">
-                                        <label for="c4"></label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <img src="../plugins/images/p3.png" alt="product" width="60" height="60">
-                                    <a href="javascript:void(0);" class="p-l-25 text-link">Earphone</a>
-                                </td>
-                                <td>Jeffery Brown</td>
-                                <td>Houston, US</td>
-                                <td>3</td>
-                                <td><span class="label label-danger">Returned</span> </td>
-                                <td>
-                                    <a href="javascript:void(0);" class="btn btn-default btn-outline font-16"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="checkbox checkbox-info">
-                                        <input id="c5" type="checkbox">
-                                        <label for="c5"></label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <img src="../plugins/images/p4.png" alt="product" width="60" height="60">
-                                    <a href="javascript:void(0);" class="p-l-25 text-link">Laptop</a>
-                                </td>
-                                <td>Elliot Dugteren</td>
-                                <td>San Antonio, US</td>
-                                <td>1</td>
-                                <td><span class="label label-warning">Pending</span> </td>
-                                <td>
-                                    <a href="javascript:void(0);" class="btn btn-default btn-outline font-16"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <ul class="pagination">
-                    <li class="disabled"> <a href="#">1</a> </li>
-                    <li class="active"> <a href="#">2</a> </li>
-                    <li> <a href="#">3</a> </li>
-                    <li> <a href="#">4</a> </li>
-                    <li> <a href="#">5</a> </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+            </div>*@
+
+
+
+
+        @section scripts{
+            <!--Morris JavaScript -->
+
+            <script src="~/Template/Cubic/plugins/components/raphael/raphael-min.js"></script>
+            <script src="~/Template/Cubic/plugins/components/morrisjs/morris.js"></script>
+            <script>
+    Morris.Bar({
+                    element: 'morris-bar-chart',
+                    data: [{
+                        y: 'Urgent',
+                        a: 50,
+
+                    }, {
+                        y: 'High',
+                        a: 75,
+
+                    }, {
+                        y: 'Medium',
+                        a: 40,
+
+                    }, {
+                        y: 'Low',
+                        a: 25,
+                    }],
+                    xkey: 'y',
+                    ykeys: ['a'],
+                    labels: ['A'],
+                    barColors: ['#2ecc71', '#0283cc', '#e74a25'],
+                    hideHover: 'auto',
+                    gridLineColor: '#e0e0e0',
+                    resize: true
+                });
+            </script>
+
+        }
