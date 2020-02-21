@@ -5652,14 +5652,16 @@ ul.list-icons li i {
 .top-left-part {
     width: 265px;
     float: left;
-    background: rgba(0, 0, 0, .1)
+    background: rgba(0, 0, 0, .1);
+    text-align: center;
+
 }
 
 .top-left-part a {
     color: #fff;
     font-size: 18px;
     padding-left: 0;
-    text-transform: uppercase
+    /*text-transform: uppercase*/
 }
 
 .navbar-header {

@@ -5,15 +5,12 @@ using System.Web;
 
 namespace WatsonTracker.DataModels
 {
-    public class ChartJsBarData
+    public class OneChartJsBarData
     {
-        public List<string> Labels { get; set; }
-        public List<int> Data { get; set; }
-
-        public ChartJsBarData()
-        {
-            Labels = new List<string>();
-            Data = new List<int>();
-        }
+        public string ProjectName { get; set; }
+        public int Urgent { get; set; }
+        public int High { get; set; }
+        public int Medium { get; set; }
+        public int Low { get; set; }
     }
 }

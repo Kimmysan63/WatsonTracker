@@ -1,143 +1,152 @@
-﻿@*!DOCTYPE html>*@
+﻿@model WatsonTracker.ViewModels.DashboardVM
+@*!DOCTYPE html>*@
 
 
 <!-- ===== Page-Container ===== -->
-    <div class="container-fluid">
-        <div class="row colorbox-group-widget">
-            <div class="col-md-3 col-sm-6 info-color-box">
-                <div class="white-box">
-                    <div class="media bg-primary">
-                        <div class="media-body">
-                            <h3 class="info-count">*need* <span class="pull-right"><i class="mdi mdi-ticket"></i></span></h3>
-                            <p class="info-text font-12">Open Tickets</p>
-                            <p class="info-ot font-15">Unassigned<span class="label label-rounded">*need*</span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 info-color-box">
-                <div class="white-box">
-                    <div class="media bg-success">
-                        <div class="media-body">
-                            <h3 class="info-count">*need* <span class="pull-right"></span></h3>
-                            <p class="info-text font-12">Open Projects</p>
-                            <h3 class="info-count"><span class="pull-right"><i class="mdi mdi-briefcase-check"></i></span></h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 info-color-box">
-                <div class="white-box">
-                    <div class="media bg-danger">
-                        <div class="media-body">
-                            <h3 class="info-count">*need* <span class="pull-right"><i class="mdi mdi-ticket-percent"></i></span></h3>
-                            <p class="info-text font-12">Urgent Tickets</p>
-                            <p class="info-ot font-15">High Priority<span class="label label-rounded">*need*</span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 info-color-box">
-                <div class="white-box">
-                    <div class="media bg-warning">
-                        <div class="media-body">
-                            <h3 class="info-count">*need*</h3>
-                            <p class="info-text font-12">Users</p>
-                            <h3 class="info-count"><span class="pull-right"><i class="mdi mdi-account-card-details"></i></span></h3>
-                        </div>
+<div class="container-fluid">
+    <div class="row colorbox-group-widget">
+        <div class="col-md-3 col-sm-6 info-color-box">
+            <div class="white-box">
+                <div class="media bg-primary">
+                    <div class="media-body">
+                        <h3 class="info-count">@Model.ActiveTickets.Count()<span class="pull-right"><i class="mdi mdi-ticket"></i></span></h3>
+                        <p class="info-text font-12">Open Tickets</p>
+                        <p class="info-ot font-15">Unassigned<span class="label label-rounded">@Model.TicNotAssigned.Count()</span></p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-7">
-                <div class="white-box">
-                    <h3 class="box-title">Ticket Priorities - Top 4 Projects</h3>
-                    <div id="morris-bar-chart"></div>
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="white-box order-chart-widget">
-                    <h4 class="box-title">Last 10 Tickets Created</h4>
-                    <div id="order-status-chart" style="height: 250px;"></div>
-                    <ul class="list-inline m-b-0 m-t-20 t-a-c">
-                        <li>
-                            <h6 class="font-15"><i class="fa fa-circle m-r-5 text-primary"></i>Orders</h6>
-                        </li>
-                        <li>
-                            <h6 class="font-15"><i class="fa fa-circle m-r-5 text-danger"></i>Pending</h6>
-                        </li>
-                        <li>
-                            <h6 class="font-15"><i class="fa fa-circle m-r-5 text-success"></i>Delivered</h6>
-                        </li>
-                    </ul>
+        <div class="col-md-3 col-sm-6 info-color-box">
+            <div class="white-box">
+                <div class="media bg-success">
+                    <div class="media-body">
+                        <h3 class="info-count">@Model.NumProjects.Count()<span class="pull-right"></span></h3>
+                        <p class="info-text font-12">Open Projects</p>
+                        <h3 class="info-count"><span class="pull-right"><i class="mdi mdi-briefcase-check"></i></span></h3>
+                    </div>
                 </div>
             </div>
         </div>
-
-        @*<div class="row">
-            <div class="col-md-8 col-sm-12">
-                <div class="white-box stat-widget">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-3">
-                            <h4 class="box-title">Sales Statistics</h4>
-                        </div>
-                        <div class="col-md-9 col-sm-9">
-                            <select class="custom-select">
-                                <option selected value="0">Feb 04 - Mar 03</option>
-                                <option value="1">Mar 04 - Apr 03</option>
-                                <option value="2">Apr 04 - May 03</option>
-                                <option value="3">May 04 - Jun 03</option>
-                            </select>
-                            <ul class="list-inline">
-                                <li>
-                                    <h6 class="font-15"><i class="fa fa-circle m-r-5 text-success"></i>Product-A</h6>
-                                </li>
-                                <li>
-                                    <h6 class="font-15"><i class="fa fa-circle m-r-5 text-primary"></i>Product-B</h6>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="stat chart-pos"></div>
+        <div class="col-md-3 col-sm-6 info-color-box">
+            <div class="white-box">
+                <div class="media bg-danger">
+                    <div class="media-body">
+                        <h3 class="info-count">@Model.PriorityUrgent.Count() <span class="pull-right"><i class="mdi mdi-ticket-percent"></i></span></h3>
+                        <p class="info-text font-12">Urgent Tickets</p>
+                        <p class="info-ot font-15">High Priority<span class="label label-rounded">@Model.PriorityHigh.Count() </ span ></ p >
                     </div>
                 </div>
-            </div>*@
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 info-color-box">
+            <div class="white-box">
+                <div class="media bg-warning">
+                    <div class="media-body">
+                        <h3 class="info-count">@Model.UsersAssigned.Count()</h3>
+                        <p class="info-text font-12">Users</p>
+                        <h3 class="info-count"><span class="pull-right"><i class="mdi mdi-account-card-details"></i></span></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7">
+            <div class="white-box">
+                <h3 class="box-title">Ticket Priorities - Top 3 Projects</h3>
+                <div id="morris-bar-chart"></div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="white-box order-chart-widget">
+                <h4 class="box-title">Last 10 Tickets Created</h4>
+                <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Title
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Created
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model.Tickets)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Title)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @item.Created.ToString("MM.dd.yyyy")
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+
+                    </table>
+            </div>
+        </div>
+    </div>
 
 
 
 
-        @section scripts{
-            <!--Morris JavaScript -->
 
-            <script src="~/Template/Cubic/plugins/components/raphael/raphael-min.js"></script>
-            <script src="~/Template/Cubic/plugins/components/morrisjs/morris.js"></script>
-            <script>
-    Morris.Bar({
+    @section scripts{
+        <!--Morris JavaScript -->
+
+        <script src="~/Template/Cubic/plugins/components/raphael/raphael-min.js"></script>
+        <script src="~/Template/Cubic/plugins/components/morrisjs/morris.js"></script>
+        <script>
+
+            var url = "@Url.Action("GetTicketPrioritiesBarChart", "Charts")";
+
+            $.post(url).then(function (response) {
+                Morris.Bar({
                     element: 'morris-bar-chart',
                     data: [{
-                        y: 'Urgent',
-                        a: 50,
+                        y: response[0].ProjectName,
+                        Urgent: response[0].Urgent,
+                        High: response[0].High,
+                        Medium: response[0].Medium,
+                        Low: response[0].Low
+                        },
+                        {
+                        y: response[1].ProjectName,
+                        Urgent: response[1].Urgent,
+                        High: response[1].High,
+                        Medium: response[1].Medium,
+                        Low: response[1].Low
+                        },
+                        {
+                        y: response[2].ProjectName,
+                        Urgent: response[2].Urgent,
+                        High: response[2].High,
+                        Medium: response[2].Medium,
+                        Low: response[2].Low
+                        },
 
-                    }, {
-                        y: 'High',
-                        a: 75,
 
-                    }, {
-                        y: 'Medium',
-                        a: 40,
-
-                    }, {
-                        y: 'Low',
-                        a: 25,
-                    }],
+                    ],
                     xkey: 'y',
-                    ykeys: ['a'],
-                    labels: ['A'],
-                    barColors: ['#2ecc71', '#0283cc', '#e74a25'],
+                    ykeys: ['Urgent', 'High', 'Medium', 'Low'],
+                    labels: ['Urgent', 'High', 'Medium', 'Low'],
+                    barColors: ['#2ecc71', '#0283cc', '#e74a25', 'lightblue'],
                     hideHover: 'auto',
                     gridLineColor: '#e0e0e0',
                     resize: true
                 });
-            </script>
+            });
+        </script>
 
-        }
+    }

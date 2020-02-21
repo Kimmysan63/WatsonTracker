@@ -8,30 +8,31 @@ using WatsonTracker.Models;
 using WatsonTracker.ViewModels;
 
 namespace WatsonTracker.Controllers
-
-{ public class DashboardController : Controller
 {
-    ApplicationDbContext db = new ApplicationDbContext();
-    DashboardVM vm = new DashboardVM();
-    UserRolesHelper helper = new UserRolesHelper();
-
-
-    // GET: Dashboard
-    public ActionResult Index()
+    public class DashboardController : Controller
     {
-        vm.ActiveTickets = db.Tickets.Where(t => t.TicketStatus.Name != "Complete").ToList();
-        vm.TicNotAssigned = db.Tickets.Where(t => t.AssignedToUserId == null).ToList();
-        vm.NumProjects = db.Projects.Where(p => p.Id != null).ToList();
-        vm.PriorityUrgent = db.Tickets.Where(t => t.TicketPriority.Name == "Urgent").ToList();
-        vm.PriorityHigh = db.Tickets.Where(t => t.TicketPriority.Name == "High").ToList();
-        vm.PriorityMedium = db.Tickets.Where(t => t.TicketPriority.Name == "Medium").ToList();
-        vm.PriorityLow = db.Tickets.Where(t => t.TicketPriority.Name == "Low").ToList();
-        vm.UsersAssigned = db.Users.Where(u => u.Roles.Count != 0).ToList();
-           
+        ApplicationDbContext db = new ApplicationDbContext();
+        DashboardVM vm = new DashboardVM();
+        UserRolesHelper helper = new UserRolesHelper();
+
+
+        // GET: Dashboard 
+        public ActionResult UserDashboard()
+        {
+            vm.ActiveTickets = db.Tickets.Where(t => t.TicketStatus.Name != "Complete").ToList();
+            vm.NumProjects = db.Projects.Where(p => p.Id < 0).ToList();
+            vm.PriorityUrgent = db.Tickets.Where(t => t.TicketPriority.Name == "Urgent").ToList();
+            vm.PriorityHigh = db.Tickets.Where(t => t.TicketPriority.Name == "High").ToList();
+            vm.PriorityMedium = db.Tickets.Where(t => t.TicketPriority.Name == "Medium").ToList();
+            vm.PriorityLow = db.Tickets.Where(t => t.TicketPriority.Name == "Low").ToList();
+            vm.UsersAssigned = db.Users.Where(u => u.Roles.Count != 0).ToList();
 
 
 
-        return View();
+
+
+            return View(vm);
+        }
     }
-} } 
+}
 

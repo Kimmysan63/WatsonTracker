@@ -185,6 +185,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\ExtensionHelper.cs" />
     <Compile Include="Helper\HistoryHelper.cs" />
     <Compile Include="Helper\NotificationManager.cs" />
     <Compile Include="Helper\ProjectsHelper.cs" />
@@ -3880,11 +3881,11 @@
     <Content Include="Views\TicketNotifications\_NotificationBell.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Template\Cubic\plugins\images\users\magnifying-glass-.webp" />
+    <Content Include="Views\Dashboard\UserDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Charts\" />
-    <Folder Include="Views\Dashboard\" />
     <Folder Include="Views\RemoveUserRoleViewModel\" />
     <Folder Include="Views\RemoveUserRole\" />
   </ItemGroup>

@@ -4,16 +4,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WatsonTracker.Helper;
 using WatsonTracker.Models;
+using WatsonTracker.ViewModels;
 
 namespace WatsonTracker.Controllers
 {
+
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private ApplicationDbContext db = new ApplicationDbContext();
+        DashboardVM vm = new DashboardVM();
+        UserRolesHelper helper = new UserRolesHelper();
+
+        public ActionResult IDashboard()
         {
             return View();
         }
+
+        // GET: Dashboard 
+        [Authorize]
+        public ActionResult Index()
+        {
+            vm.ActiveTickets = db.Tickets.Where(t => t.TicketStatus.Name != "Complete").ToList();
+            vm.TicNotAssigned = db.Tickets.Where(t => t.AssignedToUser == null).ToList();
+            vm.NumProjects = db.Projects.ToList();
+            vm.PriorityUrgent = db.Tickets.Where(t => t.TicketPriority.Name == "Urgent").ToList();
+            vm.PriorityHigh = db.Tickets.Where(t => t.TicketPriority.Name == "High").ToList();
+            vm.PriorityMedium = db.Tickets.Where(t => t.TicketPriority.Name == "Medium").ToList();
+            vm.PriorityLow = db.Tickets.Where(t => t.TicketPriority.Name == "Low").ToList();
+            vm.UsersAssigned = db.Users.Where(u => u.Roles.Count != 0).ToList();
+            vm.Tickets = db.Tickets.ToList();
+
+                       
+            return View(vm);
+        }
+
 
         public ActionResult About()
         {
@@ -30,7 +56,7 @@ namespace WatsonTracker.Controllers
         }
 
 
-        private ApplicationDbContext db = new ApplicationDbContext();
+       
         [ChildActionOnly]
         public PartialViewResult _SideNav()
         {

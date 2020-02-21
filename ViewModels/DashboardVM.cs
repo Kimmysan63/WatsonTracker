@@ -17,5 +17,8 @@ namespace WatsonTracker.ViewModels
         public List<Ticket> PriorityLow { get; set; }
         public List<ApplicationUser> UsersAssigned { get; set; }
         public int TicByProject { get; set; }
+        public List<Ticket>Tickets { get; set; }
+
+
     }
 }
