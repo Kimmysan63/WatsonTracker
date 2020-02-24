@@ -2647,6 +2647,7 @@
     <Content Include="Template\Cubic\plugins\images\users\9.jpg" />
     <Content Include="Template\Cubic\plugins\images\users\hanna.jpg" />
     <Content Include="Template\Cubic\plugins\images\users\jeffery.jpg" />
+    <Content Include="Template\Cubic\plugins\images\users\OIP-1.jfif" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

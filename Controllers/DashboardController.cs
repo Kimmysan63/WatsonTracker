@@ -19,6 +19,9 @@ namespace WatsonTracker.Controllers
         // GET: Dashboard 
         public ActionResult UserDashboard()
         {
+
+            ViewBag.ProjectManagerId = new SelectList(helper.UsersInRole("ProjectManager"), "Id", "FullName");
+
             vm.ActiveTickets = db.Tickets.Where(t => t.TicketStatus.Name != "Complete").ToList();
             vm.NumProjects = db.Projects.Where(p => p.Id < 0).ToList();
             vm.PriorityUrgent = db.Tickets.Where(t => t.TicketPriority.Name == "Urgent").ToList();
@@ -26,10 +29,8 @@ namespace WatsonTracker.Controllers
             vm.PriorityMedium = db.Tickets.Where(t => t.TicketPriority.Name == "Medium").ToList();
             vm.PriorityLow = db.Tickets.Where(t => t.TicketPriority.Name == "Low").ToList();
             vm.UsersAssigned = db.Users.Where(u => u.Roles.Count != 0).ToList();
-
-
-
-
+            vm.UserId = new SelectList(db.Users, "Id", "FirstName");
+            vm.RoleName = new SelectList(db.Roles, "Name", "Name");
 
             return View(vm);
         }

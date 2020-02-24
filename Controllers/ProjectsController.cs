@@ -111,6 +111,15 @@ namespace WatsonTracker.Controllers
             return RedirectToAction("AssignProjectManagerToProject", "Projects");
         }
 
+        //POST: Assign ProjectManager to Projects from Dashboard
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AssignProjectManagerToProjectDB(string ProjectManagerId, int ProjectId)
+        {
+            helper.AddProjectManagerToProject(ProjectManagerId, ProjectId);
+            db.SaveChanges();
+            return RedirectToAction("AssignProjectManagerToProject", "Projects");
+        }
 
 
         // GET: Projects
@@ -187,6 +196,32 @@ namespace WatsonTracker.Controllers
 
             return View(project);
         }
+
+        // GET: Projects/Create
+        [Authorize(Roles = "Admin,ProjectManager")]
+        public ActionResult CreateDB()
+        {
+            UserRolesHelper rolesHelper = new UserRolesHelper();
+            ViewBag.ProjectManagerId = new SelectList(rolesHelper.UsersInRole("ProjectManager"), "Id", "FirstName");
+            return View();
+        }
+
+        // POST: Projects/Create in User Dashboard model
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateDB([Bind(Include = "Id,Name")] Project project)
+        {
+            if (ModelState.IsValid)
+            {
+                //project.PMName = db.Users.FirstOrDefault(u => u.Id == project.ProjectManagerId).FirstName;
+                db.Projects.Add(project);
+                db.SaveChanges();
+                return RedirectToAction("UserDashboard", "Dashboard");
+            }
+
+            return View(project);
+        }
+
 
         // GET: Projects/Edit/5
         [Authorize(Roles = "Admin,ProjectManager")]

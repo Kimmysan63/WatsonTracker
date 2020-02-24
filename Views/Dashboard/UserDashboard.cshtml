@@ -1,22 +1,297 @@
 ﻿@model WatsonTracker.ViewModels.DashboardVM
+@using WatsonTracker.Helper
+@{ var helper = new UserRolesHelper(); }
+
 @{
     ViewBag.Title = "UserDashboard";
 }
 
-<h2>UserDashboard</h2>
+<h2>User Specific Dashboard</h2>
 
-<div class="row">
-    <div class="col-md-3">
-        a
+<div class="white-box">
+    <!-- /.modal1 -->
+    <h3 class="box-title">User Action Popouts</h3>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assignRole"> Assign User Role</button>
+    <div id="assignRole" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title text-white">Assign User To Role</h4>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("AssignUserRoleDB", "Roles", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            <h4></h4>
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.Label("User List", htmlAttributes: new { @class = "control-label col-md-2 bg-info" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(m => m.UserId, null, "--Select--", htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Role List", htmlAttributes: new { @class = "control-label col-md-2 bg-info" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(m => m.RoleName, null, "--Select--", htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Submit" class="btn btn-warning" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-3">
-        a
+
+    @*//Modal #2*@
+
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createProject"> Create Project</button>
+    <div id="createProject" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title text-white">Create Project</h4>
+                </div>
+                <div class="modal-body">
+
+                    @using (Html.BeginForm("CreateDB", "Projects", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.PMName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownList("ProjectManagerId", null, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PMName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Create" class="btn btn-default" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
     </div>
-    <div class="col-md-3">
-        a
+    @*//Modal #3*@
+
+    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#userToProject"> Assign User to Proj</button>
+    <div id="userToProject" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-white">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title text-white">Assign User to Project</h4>
+                </div>
+                <div class="modal-body">
+
+                    @using (Html.BeginForm("AssignUserToProjectDB", "Projects", FormMethod.Post))
+                    {
+
+
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <h4></h4>
+                            <hr />
+
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.Label("User List", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(m => m.UserId, null, htmlAttributes: new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(model => model.UserList, "", new { @class = "text-danger" })*@
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Project List", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @*@Html.DropDownListFor(m => m.ProjectId, null, htmlAttributes: new { @class = "form-control" })*@
+                                    @*@Html.ValidationMessageFor(model => model.ProjectUser, "", new { @class = "text-danger" })*@
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Submit" class="btn btn-default" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-3">
-        a
+
+    @*//Modal #4*@
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#createTicket"> Create Tickets</button>
+    <div id="createTicket" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title text-white">Create Ticket</h4>
+                </div>
+                <div class="modal-body">
+
+                    @using (Html.BeginForm("CreateTicDB", "Tickets", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            @*<div class="form-group">
+                                    @Html.LabelFor(model => model.ProjectID, "ProjectID", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("ProjectID", null, "--Select--", htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ProjectID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+                            @*<div class="form-group">
+                                    @Html.LabelFor(model => model.TicketTypeId, "TicketTypeId", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("TicketTypeId", null, "--Select--", htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.TicketTypeId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Create" class="btn btn-default" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="white-box">
+                <ul>
+                    <h3 class="box-title">Project Details</h3>
+                    <li style="color:blue">Project Name</li>
+                    <li style="color:red">Dev Assigned</li>
+                    <li style="color:purple"># Tickets</li>
+                    <li style="color:forestgreen">Users Assigned:</li>
+                    <li>U1, U2, U3</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="white-box">
+                <h3 class="box-title">Open Ticket Priorities</h3>
+                <div id="sparkline12" class="text-center">
+                    <canvas width="231" height="200" style="display: inline-block; width: 231px; height: 200px; vertical-align: top;"></canvas>
+                </div>"
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="white-box order-chart-widget">
+                <h4 class="box-title">Order Status</h4>
+                <div id="order-status-chart" style="height: 200px;">
+
+                </div>
+                <ul class="list-inline m-b-0 m-t-20 t-a-c">
+                    <li>
+                        <h6 class="font-15"><i class="fa fa-circle m-r-5 text-primary"></i>Orders</h6>
+                    </li>
+                    <li>
+                        <h6 class="font-15"><i class="fa fa-circle m-r-5 text-danger"></i>Pending</h6>
+                    </li>
+                    <li>
+                        <h6 class="font-15"><i class="fa fa-circle m-r-5 text-success"></i>Delivered</h6>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="white-box">
+                <h3 class="box-title">Ticket Status</h3>
+                <div id="sparkline11" class="text-center">
+                    <canvas style="display: inline-block; width: 200px; height: 200px; vertical-align: top, width="200" height="200"></canvas>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="white-box">
+            Tickets Based on Accessibility
+        </div>
     </div>
 </div>
 
+@section scripts{
+    <script>
+        Morris.Donut({
+            element: 'order-status-chart',
+            data: [{
+                label: "Total Orders",
+                value: 120
+
+            }, {
+                label: "Pending Orders",
+                value: 50
+            }, {
+                label: "Delivered Orders",
+                value: 70
+            }],
+            resize: true,
+            colors: ['#0283cc', '#e74a25', '#2ecc71']
+        });
+    </script>
+
+}

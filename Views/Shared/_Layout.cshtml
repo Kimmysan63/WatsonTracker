@@ -41,7 +41,7 @@
                 <div class="top-left-part">
                     <a class="logo" href="@Url.Action("Index", "Home")">
                         <h2 style="color:white">
-                              Watson Tracker
+                            Watson Bug Tracker
                         </h2>
                     </a>
                 </div>
@@ -50,137 +50,140 @@
                         <a href="javascript:void(0)" class="sidebartoggler font-20 waves-effect waves-light"><i class="icon-arrow-left-circle"></i></a>
                     </li>
                     <li>
-                        <form role="search" class="app-search hidden-xs">
-                            <i class="icon-magnifier"></i>
-                            <input type="text" placeholder="Search..." class="form-control">
-                        </form>
+                        @*<form role="search" class="app-search hidden-xs">
+                                <i class="icon-magnifier"></i>
+                                <input type="text" placeholder="Search..." class="form-control">
+                            </form>*@
                     </li>
                 </ul>
                 <ul class="nav navbar-top-links navbar-right pull-right">
                     <li>
                         @Html.Action("_NotificationBell", "TicketNotifications")
-                </li>
-                <li>
-                    @Html.Partial("_LoginPartial")
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!-- ===== Top-Navigation-End ===== -->
-    <!-- ===== Left-Sidebar ===== -->
-    <aside class="sidebar">
-        <div class="scroll-sidebar">
-            <div class="user-profile">
-                <div class="dropdown user-pro-body">
-                    <div class="profile-image">
-                        <img src="~/Template/Cubic/plugins/images/users/hanna.jpg" alt="user-img" class="img-circle">
-                        <a href="javascript:void(0);" class="dropdown-toggle u-dropdown text-blue" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span class="badge badge-danger">
-                                <i class="fa fa-angle-down"></i>
-                            </span>
-                        </a>
-                        <ul class="dropdown-menu animated flipInY">
-                            <li><a href="@Url.Action("Login", "Account")"><i class="fa fa-user"></i> Profile</a></li>
-                            <li><a href="javascript:void(0);"><i class="fa fa-inbox"></i> Inbox</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="javascript:void(0);"><i class="fa fa-cog"></i> Account Settings</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href=""><i class="fa fa-power-off"></i> Logout</a></li>
-                        </ul>
-                    </div>
-                    <p class="profile-text m-t-15 font-16"><a href="javascript:void(0);"> Kim Placeholder</a></p>
-                </div>
-            </div>
-            <nav class="sidebar-nav">
-                <ul id="side-menu">
-                    <li>
-                        <a class="active waves-effect" href="@Url.Action("Index", "Home")" aria-expanded="false"><i class="icon-screen-desktop fa-fw"></i> <span class="hide-menu"> At A Glance Dashboard</span></a>
-
                     </li>
                     <li>
-                        <a class="active waves-effect" href="@Url.Action("Index", "Dashboard")" aria-expanded="false"><i class="icon-screen-tablet fa-fw"></i> <span class="hide-menu"> User Defined Dashboard</span></a>
-
-                    </li>
-                    <li>
-                        <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-folder fa-fw"></i> <span class="hide-menu"> Account Management </span></a>
-                        <ul aria-expanded="false" class="collapse">
-                            <li> <a href="@Url.Action("Login", "Account")">Login</a> </li>
-                            <li> <a href="@Url.Action("ChangePassword", "Manage")">Reset Password</a> </li>
-                            <li> <a href="@Url.Action("ChangeName", "Manage")">Change Name</a> </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-people fa-fw"></i> <span class="hide-menu"> Roles Manager </span></a>
-                        <ul aria-expanded="false" class="collapse">
-                            <li> <a href="@Url.Action("AssignUserRole", "Roles")">Assign User Role</a> </li>
-                            <li> <a href="@Url.Action("RemoveUserRole", "Roles")">Remove User From Role</a> </li>
-                            <li> <a href="@Url.Action("Index", "Roles")">User Index</a> </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-briefcase fa-fw"></i> <span class="hide-menu"> Projects </span></a>
-                        <ul aria-expanded="false" class="collapse">
-                            <li> <a href="@Url.Action("Index", "Projects")">Project Index</a> </li>
-                            <li> <a href="@Url.Action("AssignUserToProject", "Projects")">Assign Project Users</a> </li>
-                            <li> <a href="@Url.Action("AssignProjectManagerToProject", "Projects")">Assign PM to Project</a> </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-layers fa-fw"></i> <span class="hide-menu"> Tickets </span></a>
-                        <ul aria-expanded="false" class="collapse">
-                            <li><a href="@Url.Action("AllTicketIndex", "Tickets")">All Tickets Index</a></li>
-                            <li><a href="@Url.Action("Index", "Tickets")">User Specific Tickets</a></li>
-                            <li><a href="@Url.Action("Create", "Tickets")"> Create Tickets</a></li>
-
-                        </ul>
+                        @Html.Partial("_LoginPartial")
                     </li>
                 </ul>
-            </nav>
+            </div>
+        </nav>
+        <!-- ===== Top-Navigation-End ===== -->
+        <!-- ===== Left-Sidebar ===== -->
+        <aside class="sidebar">
+            <div class="scroll-sidebar">
+                <div class="user-profile">
+                    <div class="dropdown user-pro-body">
+                        <div class="profile-image">
+                            <img src="~/Template/Cubic/plugins/images/users/OIP-1.jfif" alt="user-img" class="img-circle">
+                            <a href="javascript:void(0);" class="dropdown-toggle u-dropdown text-blue" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="badge badge-danger">
+                                    <i class="fa fa-angle-down"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu animated flipInY">
+                                <li><a href="@Url.Action("Login", "Account")"><i class="fa fa-user"></i> Profile</a></li>
+                                <li><a href="javascript:void(0);"><i class="fa fa-inbox"></i> Inbox</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="javascript:void(0);"><i class="fa fa-cog"></i> Account Settings</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href=""><i class="fa fa-power-off"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                        <p class="profile-text m-t-15 font-16"><a href="javascript:void(0);"> Issue Tracker</a></p>
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul id="side-menu">
+                        <li>
+                            <a class="active waves-effect" href="@Url.Action("Index", "Home")" aria-expanded="false"><i class="icon-screen-desktop fa-fw"></i> <span class="hide-menu"> At A Glance Dashboard</span></a>
+
+                        </li>
+                        <li>
+                            <a class="active waves-effect" href="@Url.Action("UserDashboard", "Dashboard")" aria-expanded="false"><i class="icon-screen-tablet fa-fw"></i> <span class="hide-menu"> User Defined Dashboard</span></a>
+
+                        </li>
+                        <li>
+                            <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-folder fa-fw"></i> <span class="hide-menu"> Account Management </span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li> <a href="@Url.Action("Login", "Account")">Login</a> </li>
+                                <li> <a href="@Url.Action("ChangePassword", "Manage")">Reset Password</a> </li>
+                                <li> <a href="@Url.Action("ChangeName", "Manage")">Change Name</a> </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-people fa-fw"></i> <span class="hide-menu"> Roles Manager </span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li> <a href="@Url.Action("AssignUserRole", "Roles")">Assign User Role</a> </li>
+                                <li> <a href="@Url.Action("RemoveUserRole", "Roles")">Remove User From Role</a> </li>
+                                <li> <a href="@Url.Action("Index", "Roles")">User Index</a> </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-briefcase fa-fw"></i> <span class="hide-menu"> Projects </span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li> <a href="@Url.Action("Index", "Projects")">Project Index</a> </li>
+                                <li> <a href="@Url.Action("AssignUserToProject", "Projects")">Assign Project Users</a> </li>
+                                <li> <a href="@Url.Action("AssignProjectManagerToProject", "Projects")">Assign PM to Project</a> </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-layers fa-fw"></i> <span class="hide-menu"> Tickets </span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="@Url.Action("AllTicketIndex", "Tickets")">All Tickets Index</a></li>
+                                <li><a href="@Url.Action("Index", "Tickets")">User Specific Tickets</a></li>
+                                <li><a href="@Url.Action("Create", "Tickets")"> Create Tickets</a></li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <!-- ===== Left-Sidebar-End ===== -->
+        <div class="page-wrapper">
+            <!-- ===== Page-Container ===== -->
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
         </div>
-    </aside>
-    <!-- ===== Left-Sidebar-End ===== -->
-    <div class="page-wrapper">
-        <!-- ===== Page-Container ===== -->
-        <div class="container-fluid">
-            @RenderBody()
-        </div>
+        <!-- ===== Page-Container-End ===== -->
+        <footer class="footer t-a-c">
+            The Awesome Watson Bug Tracker!
+        </footer>
     </div>
-    <!-- ===== Page-Container-End ===== -->
-    <footer class="footer t-a-c">
-        The Awesome Watson Bug Tracker!
-    </footer>
-</div>
-<!-- ===== Page-Content-End ===== -->
-<!-- ===== Main-Wrapper-End ===== -->
-<!-- ==============================
-    Required JS Files
-=============================== -->
-<!-- ===== jQuery ===== -->
-<script src="~/Template/Cubic/plugins/components/jquery/dist/jquery.min.js"></script>
-<!-- ===== Bootstrap JavaScript ===== -->
-<script src="~/Template/Cubic/cubic-html/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- ===== Slimscroll JavaScript ===== -->
-<script src="~/Template/Cubic/cubic-html/js/jquery.slimscroll.js"></script>
-<!-- ===== Wave Effects JavaScript ===== -->
-<script src="~/Template/Cubic/cubic-html/js/waves.js"></script>
-<!-- ===== Menu Plugin JavaScript ===== -->
-<script src="~/Template/Cubic/cubic-html/js/sidebarmenu.js"></script>
-<!-- ===== Custom JavaScript ===== -->
-<script src="~/Template/Cubic/cubic-html/js/custom.js"></script>
-<!-- ===== Plugin JS ===== -->
-<script src="~/Template/Cubic/plugins/components/chartist-js/dist/chartist.min.js"></script>
-<script src="~/Template/Cubic/plugins/components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
-<script src="~/Template/Cubic/plugins/components/sparkline/jquery.sparkline.min.js"></script>
-<script src="~/Template/Cubic/plugins/components/sparkline/jquery.charts-sparkline.js"></script>
-<script src="~/Template/Cubic/plugins/components/knob/jquery.knob.js"></script>
-<script src="~/Template/Cubic/plugins/components/easypiechart/dist/jquery.easypiechart.min.js"></script>
-<script src="~/Template/Cubic/cubic-html/js/db1.js"></script>
-<!-- ===== Style Switcher JS ===== -->
-<script src="~/Template/Cubic/plugins/components/styleswitcher/jQuery.style.switcher.js"></script>
-<script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
-<script>$('.table').DataTable();</script>
-@RenderSection("scripts", required: false)
+    <!-- ===== Page-Content-End ===== -->
+    <!-- ===== Main-Wrapper-End ===== -->
+    <!-- ==============================
+        Required JS Files
+    =============================== -->
+    <!-- ===== jQuery ===== -->
+    <script src="~/Template/Cubic/plugins/components/jquery/dist/jquery.min.js"></script>
+    <!-- ===== Bootstrap JavaScript ===== -->
+    <script src="~/Template/Cubic/cubic-html/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- ===== Slimscroll JavaScript ===== -->
+    <script src="~/Template/Cubic/cubic-html/js/jquery.slimscroll.js"></script>
+    <!-- ===== Wave Effects JavaScript ===== -->
+    <script src="~/Template/Cubic/cubic-html/js/waves.js"></script>
+    <!-- ===== Menu Plugin JavaScript ===== -->
+    <script src="~/Template/Cubic/cubic-html/js/sidebarmenu.js"></script>
+    <!-- ===== Custom JavaScript ===== -->
+    <script src="~/Template/Cubic/cubic-html/js/custom.js"></script>
+    <!-- ===== Plugin JS ===== -->
+
+    <script src="~/Template/Cubic/plugins/components/raphael/raphael-min.js"></script>
+    <script src="~/Template/Cubic/plugins/components/morrisjs/morris.js"></script>
+    <script src="~/Template/Cubic/plugins/components/chartist-js/dist/chartist.min.js"></script>
+    <script src="~/Template/Cubic/plugins/components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="~/Template/Cubic/plugins/components/sparkline/jquery.sparkline.min.js"></script>
+    <script src="~/Template/Cubic/plugins/components/sparkline/jquery.charts-sparkline.js"></script>
+    <script src="~/Template/Cubic/plugins/components/knob/jquery.knob.js"></script>
+    <script src="~/Template/Cubic/plugins/components/easypiechart/dist/jquery.easypiechart.min.js"></script>
+    <script src="~/Template/Cubic/cubic-html/js/db1.js"></script>
+    <!-- ===== Style Switcher JS ===== -->
+    <script src="~/Template/Cubic/plugins/components/styleswitcher/jQuery.style.switcher.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script>$('.table').DataTable();</script>
+    @RenderSection("scripts", required: false)
 </body>
 
 </html>

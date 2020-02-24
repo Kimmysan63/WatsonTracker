@@ -44,6 +44,22 @@ namespace WatsonTracker.Controllers
 
         }
 
+        // POST: Roles
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AssignUserRoleDB(string UserId, string RoleName)
+        {
+            if (helper.AddUserToRole(UserId, RoleName))
+            {
+                return RedirectToAction("UserDashboard", "Dashboard");
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+        }
+
 
 
         // GET: Remove User Roles

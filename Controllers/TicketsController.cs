@@ -125,6 +125,33 @@ namespace WatsonTracker.Controllers
             return View(ticket);
         }
 
+        // POST: Tickets/Create for Dashboard 
+        [Authorize(Roles = "Submitter")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateTicDB([Bind(Include = "Id,Title,Description,ProjectID,TicketTypeId")] Ticket ticket)
+        {
+            if (ModelState.IsValid)
+            {
+                ticket.Created = DateTimeOffset.Now;
+                ticket.OwnerUserId = User.Identity.GetUserId();
+                ticket.TicketStatusId = db.TicketStatus.FirstOrDefault(p => p.Name == "New").ID;
+                ticket.TicketPriorityId = db.TicketPriorities.FirstOrDefault(p => p.Name == "High").ID;
+                db.Tickets.Add(ticket);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", ticket.AssignedToUserId);
+            ViewBag.ProjectID = new SelectList(db.Projects, "Id", "Name", ticket.ProjectID);
+            ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
+            ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "Name", ticket.TicketStatusId);
+            ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketTypeId);
+            return View(ticket);
+        }
+
+
+
         // GET: Tickets/Edit/5
         public ActionResult Edit(int? id)
         {
