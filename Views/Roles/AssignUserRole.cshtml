@@ -1,26 +1,26 @@
 ﻿@model WatsonTracker.Models.AssignNewUserRoleViewModel
 @using WatsonTracker.Helper
-@{  var helper = new UserRolesHelper(); }
+@{ var helper = new UserRolesHelper(); }
 
 
 
-<h2>AssignUserRole</h2>
 
-@using (Html.BeginForm("AssignUserRole", "Roles", FormMethod.Post))
+@using (Html.BeginForm("AssignUserRole", "Roles", FormMethod.Post, new { @class = "bg-info" }))
 {
+    <h2 class="bg-info"> AssignUserRole </h2 >
 
 
-@Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
+    <div class="form-horizontal">
     <h4></h4>
-    <hr />
 
 
-     @Html.ValidationSummary(true, "", new { @class = "text-danger" })  
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         @Html.Label("User List", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-9">
             @Html.DropDownListFor(m => m.UserId, null, "--Select--", htmlAttributes: new { @class = "form-control" })
             @*@Html.ValidationMessageFor(model => model.UserList, "", new { @class = "text-danger" })*@
         </div>
@@ -28,7 +28,7 @@
 
     <div class="form-group">
         @Html.Label("Role List", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-9">
             @Html.DropDownListFor(m => m.RoleName, null, "--Select--", htmlAttributes: new { @class = "form-control" })
             @*@Html.ValidationMessageFor(model => model.RoleList, "", new { @class = "text-danger" })*@
         </div>
@@ -37,59 +37,66 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Submit" class="btn btn-default" />
-         </div>
+        </div>
     </div>
-</div>
+    <hr />
+    </div>
 }
-<table class="table" id="mytable">
-    <thead>
-        <tr>
-            <th>
-                User Name
-            </th>
-            <th>
-                Roles
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.UserRole)
-        {
-            <tr>
-                <td>
-                    @item.FirstName @item.LastName
-                </td>
-                <td>
-                    @foreach (var role in helper.ListUserRoles(item.Id))
-                    {
-                       string roleTag = "";
-                        {
-                            if(role == "Admin")
-                            {
-                                roleTag = "label-success";
-                            }
-                            else if(role == "ProjectManager")
-                            {
-                                roleTag = "label-info";
-                            }
-                            else if(role == "Developer")
-                            {
-                                roleTag = "label-primary";
-                            }
-                            else
-                            {
-                                roleTag = "label-danger";
-                            }
-                        }
-                        <label class="label @roleTag">@role</label> <br />
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
 
-</table>
-@section scripts
+    <div class="col-sm-12">
+        <div class="white-box">
+            <h3 class="box-title">User Names/ Roles Reference Table</h3>
+            <div class="table-responsive">
+                <table class="table color-bordered-table info-bordered-table id="mytable"">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                User Name
+                            </th>
+                            <th>
+                                Roles
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.UserRole)
+                        {
+                            <tr>
+                                <td>
+                                    @item.FirstName @item.LastName
+                                </td>
+                                <td>
+                                    @foreach (var role in helper.ListUserRoles(item.Id))
+                                    {
+                                        string roleTag = "";
+                                        {
+                                            if (role == "Admin")
+                                            {
+                                                roleTag = "label-success";
+                                            }
+                                            else if (role == "ProjectManager")
+                                            {
+                                                roleTag = "label-info";
+                                            }
+                                            else if (role == "Developer")
+                                            {
+                                                roleTag = "label-primary";
+                                            }
+                                            else
+                                            {
+                                                roleTag = "label-danger";
+                                            }
+                                        }
+                                        <label class="label @roleTag">@role</label> <br />
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+                @section scripts
     {
 
-    }
+                }

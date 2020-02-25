@@ -3,23 +3,23 @@
     ViewBag.Title = "AddUserToProject";
 }
 
-<h2>Assign User to Project</h2>
 
-@using (Html.BeginForm("AssignUserToProject", "Projects", FormMethod.Post))
+@using (Html.BeginForm("AssignUserToProject", "Projects", FormMethod.Post, new { @class = "bg-primary" }))
 {
+<h2 class="bg-primary">Assign User to Project</h2>
 
 
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
         <h4></h4>
-        <hr />
+        @*<hr />*@
 
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.Label("User List", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-9">
                 @Html.DropDownListFor(m => m.UserId, null, htmlAttributes: new { @class = "form-control" })
                 @*@Html.ValidationMessageFor(model => model.UserList, "", new { @class = "text-danger" })*@
             </div>
@@ -27,7 +27,7 @@
 
         <div class="form-group">
             @Html.Label("Project List", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-9">
                 @Html.DropDownListFor(m => m.ProjectId, null, htmlAttributes: new { @class = "form-control" })
                 @*@Html.ValidationMessageFor(model => model.ProjectUser, "", new { @class = "text-danger" })*@
             </div>
@@ -38,38 +38,43 @@
                 <input type="submit" value="Submit" class="btn btn-default" />
             </div>
         </div>
+        <hr />
     </div>
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                User Name
-            </th>
-            <th>
-                Projects
-            </th>
-        </tr>
+<div class="col-sm-12">
+    <div class="white-box">
+        <h3>Users / Projects Reference Table</h3>
+        <div class="table-responsive">
+            <table class="table color-bordered-table primary-bordered-table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                User Name
+                            </th>
+                            <th>
+                                Projects
+                            </th>
+                        </tr>
 
-    </thead>
-    <tbody>
-        @foreach (var item in Model.ProjectUser)
-        {
-            <tr>
-                <td>
-                    @item.FirstName @item.LastName
-                </td>
-                <td>
-                    @foreach (var proj in item.Projects)
-                    {
-                        <p>@proj.Name</p>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ProjectUser)
+                        {
+                            <tr>
+                                <td>
+                                    @item.FirstName @item.LastName
+                                </td>
+                                <td>
+                                    @foreach (var proj in item.Projects)
+                                    {
+                                        <p>@proj.Name</p>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
 
 
-<!-- CSS -->
+                <!-- CSS -->

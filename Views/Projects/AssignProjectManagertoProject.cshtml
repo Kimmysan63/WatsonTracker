@@ -1,8 +1,8 @@
 ﻿@model WatsonTracker.ViewModels.AssignProjectManagerToProject
-<h2>Assign Project Manager to Project</h2>
 
-@using (Html.BeginForm("AssignProjectManagerToProject", "Projects", FormMethod.Post))
+@using (Html.BeginForm("AssignProjectManagerToProject", "Projects", FormMethod.Post, new { @class = "bg-success" }))
 {
+    <h2 class="bg-success">Assign Project Manager to Project</h2>
 
 
     @Html.AntiForgeryToken()
@@ -10,13 +10,13 @@
     <div class="form-horizontal">
 
         <h4></h4>
-        <hr />
+
 
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.Label("Project List", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-9">
                 @Html.DropDownListFor(m => m.ProjectId, null, "--Select--", htmlAttributes: new { @class = "form-control" })
                 @*@Html.ValidationMessageFor(model => model.UserList, "", new { @class = "text-danger" })*@
             </div>
@@ -24,7 +24,7 @@
 
         <div class="form-group">
             @Html.Label("Project Manager List", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-9">
                 @Html.DropDownListFor(m => m.ProjectManagerId, null, "--Select--", htmlAttributes: new { @class = "form-control" })
                 @*@Html.ValidationMessageFor(model => model.ProjectUser, "", new { @class = "text-danger" })*@
             </div>
@@ -35,31 +35,37 @@
                 <input type="submit" value="Submit" class="btn btn-default" />
             </div>
         </div>
+        <hr />
     </div>
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Projects Manager Id
-            <th>
-                Project Name
-            </th>
+<div class="col-sm-12">
+    <div class="white-box">
+        <h3 class="box-title">Project Manager / Projects Reference Table</h3>
+        <div class="table-responsive">
+            <table class="table color-bordered-table success-bordered-table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Projects Manager Id
+                        </th>
+                        <th>
+                            Project Name
+                        </th>
 
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var project in Model.Projects)
-        {
-            <tr>
-                <td>
-                    @project.PMName
-                </td>
-                <td>
-                    <p>@project.Name</p>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var project in Model.Projects)
+                    {
+                        <tr>
+                            <td>
+                                @project.PMName
+                            </td>
+                            <td>
+                                <p>@project.Name</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>

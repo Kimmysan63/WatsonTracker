@@ -9,21 +9,21 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="white-box">
-            <h2>Projects Index</h2>
-            <p class="text-muted m-b-20"></p>
-            <div class="table-responsive">
-                <table class="table table-striped">
+<div class="col-sm-12">
+    <div class="white-box">
+        <h3 class="box-title">Projects Index</h3>
+        <div class="table-responsive">
+            <table class="table color-bordered-table dark-bordered-table table-striped">
+                @*<table class="table table-striped">*@
                     <thead>
                         <tr>
-                            <th style="color:blue">
+                            <th>
                                 Project Name
                             </th>
-                            <th style="color:blue">
+                            <th>
                                 Project Manager
                             </th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,7 +45,6 @@
                     </tbody>
 
                 </table>
-            </div>
         </div>
     </div>
 </div>

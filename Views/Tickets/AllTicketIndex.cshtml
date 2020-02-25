@@ -5,107 +5,112 @@
         color: red;
         font-weight: bold;
     }
+
+    .text-primary th {
+        color: #6a2dff !important;
+    }
 </style>
 
 @{
     ViewBag.Title = "All Ticket Index";
 }
 
-<h2>All Ticket Index</h2>
+<div class="col-sm-12">
+    <div class="white-box">
+        <h3 class="box-title">All Tickets Table</h3>
+        <div class="table-responsive">
+            <table class="table color-table success-table">
+                <thead>
+                    <tr>
+                        <th>
+                            Assigned To
+                        </th>
+                        <th>
+                            Owner
+                        </th>
+                        <th>
+                            Project Name
+                        </th>
+                        <th>
+                            Priority
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Created
+                        </th>
+                        @*<th>
+                                Updated
+                            </th>*@
+                        @*<th></th>*@
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OwnerUser.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Project.Name)
+                            </td>
+
+                            @if (item.TicketPriority.Name == "Urgent")
+                            {
+                                <td>
+                                    <span class="priorityUrgent">
+                                        @Html.DisplayFor(model => item.TicketPriority.Name)
+                                    </span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TicketPriority.Name)
+                                </td>
+                            }
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TicketStatus.Name)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TicketType.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @item.Created.ToString("MM.dd.yyyy")
+                            </td>
+                            @*<td>
+                                @Html.DisplayFor(modelItem => item.Updated)*@
+                            @*</td>*@
+                            @*<td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                </td>*@
+                        </tr>
+                    }
+                </tbody>
 
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                Assigned To
-            </th>
-            <th>
-                Owner
-            </th>
-            <th>
-                Project Name
-            </th>
-            <th>
-                Priority
-            </th>
-            <th>
-                Status
-            </th>
-            <th>
-                Type
-            </th>
-            <th>
-                Title
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Created
-            </th>
-            @*<th>
-                    Updated
-                </th>*@
-            @*<th></th>*@
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OwnerUser.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Project.Name)
-            </td>
-
-            @if (item.TicketPriority.Name == "Urgent")
-            {
-                <td>
-                    <span class="priorityUrgent">
-                        @Html.DisplayFor(model => item.TicketPriority.Name)
-                    </span>
-                </td>
-            }
-            else
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => item.TicketPriority.Name)
-                </td>
-            }
-            <td>
-                @Html.DisplayFor(modelItem => item.TicketStatus.Name)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.TicketType.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @item.Created.ToString("MM.dd.yyyy")
-            </td>
-            @*<td>
-        @Html.DisplayFor(modelItem => item.Updated)*@
-            @*</td>*@
-            @*<td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>*@
-        </tr>
-        }
-    </tbody>
-
-
-</table>
+            </table>
