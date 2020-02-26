@@ -40,12 +40,11 @@ namespace WatsonTracker.ViewModels
         //create ticket
         public string Title { get; set; }
         public string Description { get; set; }
-        public DateTimeOffset Created { get; set; }
-        public DateTimeOffset? Updated { get; set; }
-        public int ProjectID { get; set; }
         public virtual Project Project { get; set; }
 
-        public int TicketTypeId { get; set; }
+        public SelectList TicketTypeId { get; set; }
         public virtual TicketType TicketType { get; set; }
+
+       
     }
 }

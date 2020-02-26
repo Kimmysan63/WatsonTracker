@@ -139,7 +139,7 @@ namespace WatsonTracker.Controllers
                 ticket.TicketPriorityId = db.TicketPriorities.FirstOrDefault(p => p.Name == "High").ID;
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("UserDashboard", "Dashboard");
             }
 
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", ticket.AssignedToUserId);

@@ -43,6 +43,16 @@ namespace WatsonTracker.Controllers
             helper.AddUserToProject(UserId, ProjectId);
             db.SaveChanges();
             return RedirectToAction("AssignUserToProject", "Projects");
+
+        }
+        //POST: Assign Users to Projects from Dashboard
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AssignUserToProjectDB(string UserId, int ProjectId)
+        {
+            helper.AddUserToProject(UserId, ProjectId);
+            db.SaveChanges();
+            return RedirectToAction("UserDashboard", "Dashboard");
         }
 
         // GET: Remove Users to Projects

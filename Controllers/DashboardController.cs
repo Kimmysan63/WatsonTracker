@@ -31,6 +31,8 @@ namespace WatsonTracker.Controllers
             vm.UsersAssigned = db.Users.Where(u => u.Roles.Count != 0).ToList();
             vm.UserId = new SelectList(db.Users, "Id", "FirstName");
             vm.RoleName = new SelectList(db.Roles, "Name", "Name");
+            vm.ProjectId = new SelectList(db.Projects, "Id", "Name");
+            vm.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name");
 
             return View(vm);
         }

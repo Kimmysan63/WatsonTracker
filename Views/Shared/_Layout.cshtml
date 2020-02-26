@@ -79,14 +79,14 @@
                                     <i class="fa fa-angle-down"></i>
                                 </span>
                             </a>
-                            <ul class="dropdown-menu animated flipInY">
-                                <li><a href="@Url.Action("Login", "Account")"><i class="fa fa-user"></i> Profile</a></li>
-                                <li><a href="javascript:void(0);"><i class="fa fa-inbox"></i> Inbox</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="javascript:void(0);"><i class="fa fa-cog"></i> Account Settings</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href=""><i class="fa fa-power-off"></i> Logout</a></li>
-                            </ul>
+                            @*<ul class="dropdown-menu animated flipInY">
+                                    <li><a href="@Url.Action("Login", "Account")"><i class="fa fa-user"></i> Profile</a></li>
+                                    <li><a href="javascript:void(0);"><i class="fa fa-inbox"></i> Inbox</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="javascript:void(0);"><i class="fa fa-cog"></i> Account Settings</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href=""><i class="fa fa-power-off"></i> Logout</a></li>
+                                </ul>*@
                         </div>
                         <p class="profile-text m-t-15 font-16"><a href="javascript:void(0);"> Opportunities Tracker</a></p>
                     </div>
@@ -111,8 +111,11 @@
                         <li>
                             <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-people fa-fw"></i> <span class="hide-menu"> Roles Manager </span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li> <a href="@Url.Action("AssignUserRole", "Roles")">Assign User Role</a> </li>
-                                <li> <a href="@Url.Action("RemoveUserRole", "Roles")">Remove User From Role</a> </li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li> <a href="@Url.Action("AssignUserRole", "Roles")">Assign User Role</a> </li>
+                                    <li> <a href="@Url.Action("RemoveUserRole", "Roles")">Remove User From Role</a> </li>
+                                }
                                 <li> <a href="@Url.Action("Index", "Roles")">User Index</a> </li>
                             </ul>
                         </li>
@@ -121,8 +124,11 @@
                             <a class="active waves-effect" href="javascript:void(0);" aria-expanded="false"><i class="icon-briefcase fa-fw"></i> <span class="hide-menu"> Projects </span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li> <a href="@Url.Action("Index", "Projects")">Project Index</a> </li>
-                                <li> <a href="@Url.Action("AssignUserToProject", "Projects")">Assign Project Users</a> </li>
-                                <li> <a href="@Url.Action("AssignProjectManagerToProject", "Projects")">Assign PM to Project</a> </li>
+                                @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
+                                {
+                                    <li> <a href="@Url.Action("AssignUserToProject", "Projects")">Assign Project Users</a> </li>
+                                    <li> <a href="@Url.Action("AssignProjectManagerToProject", "Projects")">Assign PM to Project</a> </li>
+                                }
                             </ul>
                         </li>
                         <li>
@@ -130,7 +136,10 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="@Url.Action("AllTicketIndex", "Tickets")">All Tickets Index</a></li>
                                 <li><a href="@Url.Action("Index", "Tickets")">User Specific Tickets</a></li>
-                                <li><a href="@Url.Action("Create", "Tickets")"> Create Tickets</a></li>
+                                @if (User.IsInRole("Submitter"))
+                                {
+                                    <li><a href="@Url.Action("Create", "Tickets")"> Create Tickets</a></li>
+                                }
 
                             </ul>
                         </li>
