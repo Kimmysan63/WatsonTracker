@@ -1,6 +1,8 @@
 ﻿@model WatsonTracker.ViewModels.DashboardVM
 @using WatsonTracker.Helper
-@{ var helper = new UserRolesHelper(); }
+@{ var helper = new UserRolesHelper();
+    var projectHelper = new ProjectsHelper();
+}
 
 
 
@@ -222,106 +224,374 @@
             </div>
         }
     </div>
-
-    <div class="row">
-        <div class="col-md-3">
-            <div class="white-box">
-                <h4 class="box-title">*Project Name*</h4>
-                <div class="task-widget t-a-c">
-                    <div class="task-content font-16 t-a-c">
-                        <div class="col-sm-6 b-r">
-                            Proj Mgr
-                            <h5 class="text-primary">*5 </h5>
+    <!--end of button modals-->
+    @foreach (var project in Model.NumProjects)
+    {
+        //Project Description Box
+        <div class="row">
+            <div class="col-md-3">
+                <div class="white-box" style="height:450px;">
+                    <h4 class="box-title">Proj Name: @project.Name</h4>
+                    <div class="task-widget t-a-c">
+                        <div class="task-content font-16 t-a-c">
+                            <div class="col-sm-12 ">
+                                PM Name: @project.PMName
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                            Dev
-                            <h5 class="text-primary">*3 </h5>
+                        <div class="task-assign font-16">
+                            <ul class="list-inline">
+                                <div class="text-dark">Project Users:</div>
+                                @foreach (var user in projectHelper.UsersOnProject(project.Id))
+                                {
+                                    <li class="p-l-0">
+                                        <p>
+                                            @user.FullName -
+                                            @foreach (var role in helper.ListUserRoles(user.Id))
+                                            {
+                                                <span class="text-blue">@role</span>
+                                            }
+                                        </p>
+                                    </li>
+                                }
+                            </ul>
                         </div>
                     </div>
-                    <div class="task-assign font-16">
-                        Other Users
-                        <ul class="list-inline">
-                            <li class="p-l-0">
-                                <img src="../plugins/images/users/1.png" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Steave">
+                </div>
+            </div>
+            <!--Ticket Priorities-->
+            <div class="col-md-3">
+                <div class="white-box">
+                    <h3 class="box-title">Ticket Priorities</h3>
+                    <div id="morris-bar-chart-@project.Id"></div>
+                </div>
+            </div>
+            <!--Ticket Type-->
+            <div class="col-md-3">
+                <div class="white-box order-chart-widget" style="height:450px;">
+                    <h4 class="box-title">Ticket Type</h4>
+                    <div id="order-status-chart-@project.Id" style="height: 200px;">
+                        <ul class="list-inline m-b-0 m-t-20 t-a-c">
+                            <li>
+                                <h6 class="font-15"><i class="fa fa-circle m-r-5 text-primary"></i>Task</h6>
                             </li>
                             <li>
-                                <img src="../plugins/images/users/2.png" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Steave">
+                                <h6 class="font-15"><i class="fa fa-circle m-r-5 text-danger"></i>Prod Fix</h6>
                             </li>
                             <li>
-                                <img src="../plugins/images/users/3.png" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Steave">
-                            </li>
-                            <li class="p-r-0">
-                                <a href="javascript:void(0);" class="btn btn-success font-16">3+</a>
+                                <h6 class="font-15"><i class="fa fa-circle m-r-5 text-success"></i>Software Update</h6>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="white-box">
-                <h3 class="box-title">Open Ticket Priorities</h3>
-                <div id="sparkline12" class="text-center">
-                    <canvas width="231" height="200" style="display: inline-block; width: 231px; height: 200px; vertical-align: top;"></canvas>
-                </div>"
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="white-box order-chart-widget">
-                <h4 class="box-title">Order Status</h4>
-                <div id="order-status-chart" style="height: 200px;">
-
+            <!--Ticket Status-->
+            <div class="col-md-3">
+                <div class="white-box" style="height:450px;">
+                    <h3 class="box-title">Ticket Status</h3>
+                    <div id="sparkline-@project.Id" class="text-center">
+                        <canvas style="display: inline-block" vertical-align: top, width="200" height="200"></canvas>
+                    </div>
+                    <ul class="list-inline m-b-0 m-t-20 t-a-c">
+                        <li>
+                            <h6 class="font-15"><i class="fa fa-square m-r-5 text-primary"></i>New</h6>
+                        </li>
+                        <li>
+                            <h6 class="font-15"><i class="fa fa-square m-r-5 text-danger"></i>In development</h6>
+                        </li>
+                        <li>
+                            <h6 class="font-15"><i class="fa fa-square m-r-5 text-success"></i>Complete</h6>
+                        </li>
+                    </ul>
                 </div>
-                <ul class="list-inline m-b-0 m-t-20 t-a-c">
-                    <li>
-                        <h6 class="font-15"><i class="fa fa-circle m-r-5 text-primary"></i>Orders</h6>
-                    </li>
-                    <li>
-                        <h6 class="font-15"><i class="fa fa-circle m-r-5 text-danger"></i>Pending</h6>
-                    </li>
-                    <li>
-                        <h6 class="font-15"><i class="fa fa-circle m-r-5 text-success"></i>Delivered</h6>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="white-box">
-                <h3 class="box-title">Ticket Status</h3>
-                <div id="sparkline11" class="text-center">
-                    <canvas style="display: inline-block" vertical-align: top, width="200" height="200"></canvas>
-                </div>
-            </div>
 
+            </div>
         </div>
-    </div>
+    }
 </div>
+<!--User Defined Ticket List-->
 <div class="row">
-    <div class="white-box">
-        Tickets Based on Accessibility
+    <div class="col-sm-12">
+        <div class="white-box">
+            <h3 class="box-title">User Defined Tickets Table</h3>
+            <div class="table-responsive ">
+                <table class="table color-table info-table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Assigned To
+                            </th>
+                            <th>
+                                Owner
+                            </th>
+                            <th>
+                                Project Name
+                            </th>
+                            <th>
+                                Priority
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Type
+                            </th>
+                            <th>
+                                Title
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+                                Created
+                            </th>
+                            <th>
+                                Updated
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.MyTickets)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OwnerUser.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Project.Name)
+                                </td>
+                                @if (item.TicketPriority.Name == "Urgent")
+                                {
+                                    <td>
+                                        <span class="priorityUrgent">
+                                            @Html.DisplayFor(model => item.TicketPriority.Name)
+                                        </span>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TicketPriority.Name)
+                                    </td>
+                                }
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TicketStatus.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TicketType.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @item.Created.ToString("MM.dd.yyyy")
+                                </td>
+
+                                @if (item.Updated != null)
+                                {
+                                    <td>
+                                        @item.Updated.Value.Date.ToString("MM.dd.yyyy")
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline btn-primary btn-sm btn-block" })
+                                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline btn-success btn-sm" })
+                                    @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
+                                    {
+                                        @Html.ActionLink("Assign", "AssignTicket", new { id = item.Id }, new { @class = "btn btn-outline btn-danger btn-sm" })
+                                    }
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+                @if (User.IsInRole("Developer") && Model.AssignedTickets.Count() != 0)
+                {
+                    <h2>Ticket Assigned Index</h2>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Assigned To
+                                </th>
+                                <th>
+                                    Owner
+                                </th>
+                                <th>
+                                    Project Name
+                                </th>
+                                <th>
+                                    Priority
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Type
+                                </th>
+                                <th>
+                                    Title
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Created
+                                </th>
+                                <th>
+                                    Updated
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @foreach (var item in Model.AssignedTickets)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OwnerUser.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Project.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TicketPriority.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TicketStatus.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TicketType.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @item.Created.ToString("MM.dd.yyyy")
+                                </td>
+                                @if (item.Updated != null)
+                                {
+                                    <td>
+                                        @item.Updated.Value.Date.ToString("MM.dd.yyyy")
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline btn-primary btn-sm btn-block" })
+                                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline btn-success btn-sm btn-block" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-outline btn-danger btn-sm btn-block" })
+                                </td>
+                            </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
     </div>
 </div>
 
-    
+
+
 
 @section scripts{
-    <script>
+    @foreach (var project in Model.NumProjects)
+    {
+        //Ticket Types
+        <script>
         Morris.Donut({
-            element: 'order-status-chart',
+            element: 'order-status-chart-@project.Id',
             data: [{
-                label: "Total Orders",
-                value: 120
+                label: "Project Tasks",
+                value: @project.Tickets.Count(t => t.TicketType.Name == "Project Task")
 
             }, {
-                label: "Pending Orders",
-                value: 50
+                label: "Production Fix",
+                value: @project.Tickets.Count(t => t.TicketType.Name == "Production Fix")
             }, {
-                label: "Delivered Orders",
-                value: 70
+                label: "Software",
+                value: @project.Tickets.Count(t => t.TicketType.Name == "Software Update")
             }],
             resize: true,
             colors: ['#0283cc', '#e74a25', '#2ecc71']
         });
-    </script>
+            //Ticket Priorities
+        Morris.Bar({
+                    element: 'morris-bar-chart-@project.Id',
+                    data: [{
+                        y: "@project.Name",
+                        Urgent: @project.Tickets.Count(t => t.TicketPriority.Name == "Urgent"),
+                        High: @project.Tickets.Count(t => t.TicketPriority.Name == "High"),
+                        Medium: @project.Tickets.Count(t => t.TicketPriority.Name == "Medium"),
+                        Low: @project.Tickets.Count(t => t.TicketPriority.Name == "Low")
+                        }
+                    ],
+                    xkey: 'y',
+                    ykeys: ['Urgent', 'High', 'Medium', 'Low'],
+                    labels: ['Urgent', 'High', 'Medium', 'Low'],
+                    barColors: ['red', 'orange', 'blue', 'green'],
+                    hideHover: 'auto',
+                    gridLineColor: '#e0e0e0',
+                    resize: false,
+                    numLines: 3
+                });
+            //Ticket Status
+        $(document).ready(function () {
+            var sparklineLogin = function () {
+
+                $('#sparkline-@project.Id').sparkline([@project.Tickets.Count(t => t.TicketStatus.Name == "New"), @project.Tickets.Count(t => t.TicketStatus.Name == "In Development"), @project.Tickets.Count(t => t.TicketStatus.Name == "Completed")], {
+                    type: 'pie',
+                    height: '200',
+                    resize: true,
+                    sliceColors: ['#00bbd9', '#e74a25', '#2ecc71'],
+                    tooltipFormat: '{{offset:offset}} {{value}}',
+                    tooltipValueLookups: {
+                        'offset': {
+                            0: 'New',
+                            1: 'In Development',
+                            2: 'Complete'
+                        }
+                    }
+                });
+
+            }
+            var sparkResize;
+
+            $(window).resize(function (e) {
+                clearTimeout(sparkResize);
+                sparkResize = setTimeout(sparklineLogin, 500);
+            });
+            sparklineLogin();
+        });
+
+        </script>
+    }
 
 }

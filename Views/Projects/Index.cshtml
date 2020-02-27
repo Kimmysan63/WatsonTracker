@@ -15,36 +15,39 @@
         <div class="table-responsive">
             <table class="table color-bordered-table dark-bordered-table table-striped">
                 @*<table class="table table-striped">*@
-                    <thead>
+                <thead>
+                    <tr>
+                        <th>
+                            Project Name
+                        </th>
+                        <th>
+                            Project Manager
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
                         <tr>
-                            <th>
-                                Project Name
-                            </th>
-                            <th>
-                                Project Manager
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PMName)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PMName)
+                            </td>
+                            <td>
+                                @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
+                                {
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
                                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
 
-                </table>
+            </table>
         </div>
     </div>
 </div>

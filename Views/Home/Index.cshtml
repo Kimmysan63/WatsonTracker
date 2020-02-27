@@ -61,39 +61,39 @@
             <div class="white-box order-chart-widget">
                 <h4 class="box-title">Last 10 Tickets Created</h4>
                 <table class="table table-striped">
-                        <thead>
+                    <thead>
+                        <tr>
+                            <th>
+                                Title
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+                                Created
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.Tickets)
+                        {
                             <tr>
-                                <th>
-                                    Title
-                                </th>
-                                <th>
-                                    Description
-                                </th>
-                                <th>
-                                    Created
-                                </th>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @item.Created.ToString("MM.dd.yyyy")
+                                </td>
                             </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var item in Model.Tickets)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Title)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Description)
-                                    </td>
-                                    <td>
-                                        @item.Created.ToString("MM.dd.yyyy")
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
+                        }
+                    </tbody>
 
 
-                    </table>
+                </table>
             </div>
         </div>
     </div>
@@ -104,6 +104,7 @@
 
     @section scripts{
         <!--Morris JavaScript -->
+
 
         <script src="~/Template/Cubic/plugins/components/raphael/raphael-min.js"></script>
         <script src="~/Template/Cubic/plugins/components/morrisjs/morris.js"></script>
@@ -150,3 +151,4 @@
         </script>
 
     }
+</div>

@@ -45,6 +45,9 @@ namespace WatsonTracker.ViewModels
         public SelectList TicketTypeId { get; set; }
         public virtual TicketType TicketType { get; set; }
 
-       
+        //User Defined Ticket List
+        public List<Ticket> MyTickets { get; set; }
+        public List<Ticket> AssignedTickets { get; set; }
+
     }
 }
