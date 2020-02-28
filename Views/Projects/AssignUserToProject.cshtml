@@ -4,9 +4,9 @@
 }
 
 
-@using (Html.BeginForm("AssignUserToProject", "Projects", FormMethod.Post, new { @class = "bg-primary" }))
+@using (Html.BeginForm("AssignUserToProject", "Projects", FormMethod.Post, new { @class = "bg-info" }))
 {
-<h2 class="bg-primary">Assign User to Project</h2>
+<h2 class="bg-info">Assign Project Users</h2>
 
 
     @Html.AntiForgeryToken()
@@ -46,7 +46,7 @@
     <div class="white-box">
         <h3>Users / Projects Reference Table</h3>
         <div class="table-responsive">
-            <table class="table color-bordered-table primary-bordered-table table-striped">
+            <table class="table color-bordered-table info-bordered-table table-striped">
                     <thead>
                         <tr>
                             <th>

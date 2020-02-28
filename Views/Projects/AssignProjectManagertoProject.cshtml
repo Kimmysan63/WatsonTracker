@@ -1,8 +1,8 @@
 ﻿@model WatsonTracker.ViewModels.AssignProjectManagerToProject
 
-@using (Html.BeginForm("AssignProjectManagerToProject", "Projects", FormMethod.Post, new { @class = "bg-success" }))
+@using (Html.BeginForm("AssignProjectManagerToProject", "Projects", FormMethod.Post, new { @class = "bg-info" }))
 {
-    <h2 class="bg-success">Assign Project Manager to Project</h2>
+    <h2 class="bg-info">Assign Project Manager to Project</h2>
 
 
     @Html.AntiForgeryToken()
@@ -35,6 +35,7 @@
                 <input type="submit" value="Submit" class="btn btn-default" />
             </div>
         </div>
+        @*<a href="@Url.Action("UserDashboard", "Dashboard")></a>*@
         <hr />
     </div>
 }
@@ -43,7 +44,7 @@
     <div class="white-box">
         <h3 class="box-title">Project Manager / Projects Reference Table</h3>
         <div class="table-responsive">
-            <table class="table color-bordered-table success-bordered-table table-striped">
+            <table class="table color-bordered-table info-bordered-table table-striped">
                 <thead>
                     <tr>
                         <th>

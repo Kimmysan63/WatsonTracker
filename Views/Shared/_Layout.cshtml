@@ -74,11 +74,11 @@
                     <div class="dropdown user-pro-body">
                         <div class="profile-image">
                             <img src="~/Template/Cubic/plugins/images/users/OIP-1.jfif" alt="user-img" class="img-circle">
-                            <a href="javascript:void(0);" class="dropdown-toggle u-dropdown text-blue" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            @*<a href="javascript:void(0);" class="dropdown-toggle u-dropdown text-blue" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="badge badge-danger">
                                     <i class="fa fa-angle-down"></i>
                                 </span>
-                            </a>
+                            </a>*@
                             @*<ul class="dropdown-menu animated flipInY">
                                     <li><a href="@Url.Action("Login", "Account")"><i class="fa fa-user"></i> Profile</a></li>
                                     <li><a href="javascript:void(0);"><i class="fa fa-inbox"></i> Inbox</a></li>
@@ -127,7 +127,9 @@
                                 @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
                                 {
                                     <li> <a href="@Url.Action("AssignUserToProject", "Projects")">Assign Project Users</a> </li>
+                                    <li> <a href="@Url.Action("RemoveUserFromProject", "Projects")">Remove Project Users</a> </li>
                                     <li> <a href="@Url.Action("AssignProjectManagerToProject", "Projects")">Assign PM to Project</a> </li>
+
                                 }
                             </ul>
                         </li>

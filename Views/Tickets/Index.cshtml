@@ -53,57 +53,64 @@
 
                     @foreach (var item in Model.MyTickets)
                     {
-                        <tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OwnerUser.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Project.Name)
+                        </td>
+                        @if (item.TicketPriority.Name == "Urgent")
+                        {
                             <td>
-                                @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
+                                <span class="priorityUrgent">
+                                    @Html.DisplayFor(model => item.TicketPriority.Name)
+                                </span>
                             </td>
+                        }
+                        else
+                        {
                             <td>
-                                @Html.DisplayFor(modelItem => item.OwnerUser.FirstName)
+                                @Html.DisplayFor(modelItem => item.TicketPriority.Name)
                             </td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TicketStatus.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TicketType.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @item.Created.ToString("MM.dd.yyyy")
+                        </td>
+                        @if (item.Updated != null)
+                        {
                             <td>
-                                @Html.DisplayFor(modelItem => item.Project.Name)
+                                @item.Updated.Value.Date.ToString("MM.dd.yyyy")
                             </td>
-                            @if (item.TicketPriority.Name == "Urgent")
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline btn-primary btn-sm btn-block" })
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline btn-success btn-sm" })
+                            @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
                             {
-                                <td>
-                                    <span class="priorityUrgent">
-                                        @Html.DisplayFor(model => item.TicketPriority.Name)
-                                    </span>
-                                </td>
+                                @Html.ActionLink("Assign", "AssignTicket", new { id = item.Id }, new { @class = "btn btn-outline btn-danger btn-sm" })
                             }
-                            else
-                            {
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TicketPriority.Name)
-                                </td>
-                            }
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TicketStatus.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TicketType.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Title)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Description)
-                            </td>
-                            <td>
-                                @item.Created.ToString("MM.dd.yyyy")
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Updated)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-outline btn-primary btn-sm btn-block" })
-                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-outline btn-success btn-sm" })
-                                @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
-                                {
-                                    @Html.ActionLink("Assign", "AssignTicket", new { id = item.Id }, new { @class = "btn btn-outline btn-danger btn-sm" })
-                                }
-                            </td>
-                        </tr>
+                        </td>
+                    </tr>
                     }
 
                 </tbody>

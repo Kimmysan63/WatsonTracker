@@ -3,9 +3,9 @@
 @{ var helper = new UserRolesHelper(); }
 
 
-@using (Html.BeginForm("RemoveUserRole", "Roles", FormMethod.Post, new { @class = "bg-warning" }))
+@using (Html.BeginForm("RemoveUserRole", "Roles", FormMethod.Post, new { @class = "bg-info" }))
 {
-    <h2 class="bg-warning">RemoveUserRole</h2>
+    <h2 class="bg-info">Remove User From Role</h2>
 
 
     @Html.AntiForgeryToken()
@@ -44,7 +44,7 @@
     <div class="white-box">
         <h3 class="box-title">User Names / Roles Reference Table</h3>
         <div class="table-responsive">
-            <table class="table color-bordered-table warning-bordered-table">
+            <table class="table color-bordered-table info-bordered-table">
                 <thead>
                     <tr>
                         <th>
